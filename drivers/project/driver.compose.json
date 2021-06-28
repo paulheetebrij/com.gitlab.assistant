@@ -3,6 +3,10 @@
     "en": "Project"
   },
   "class": "other",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png"
+  },
   "capabilities": [
     "open_issues",
     "last_build",
