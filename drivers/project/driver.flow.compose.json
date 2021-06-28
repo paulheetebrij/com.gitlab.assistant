@@ -1,7 +1,7 @@
 {
   "actions": [
     {
-      "id": "add-project-issue",
+      "id": "project-add-issue",
       "title": {
         "en": "Add project issue",
         "nl": "Maak project-issue aan"
@@ -24,7 +24,7 @@
   ],
   "triggers": [
     {
-      "id": "pipeline-status-changed",
+      "id": "project-pipeline-status-changed",
       "title": {
         "en": "Pipeline status changed",
         "nl": "Statuswijziging pipeline"
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "id": "new-project-commit",
+      "id": "project-new-commit",
       "title": {
         "en": "New commit",
         "nl": "Nieuwe commit"

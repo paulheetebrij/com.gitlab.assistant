@@ -1,7 +1,7 @@
 {
   "triggers": [
     {
-      "id": "new-activity",
+      "id": "user-new-todo",
       "title": {
         "en": "New activity",
         "nl": "Nieuwe activiteit"
@@ -83,7 +83,7 @@
   ],
   "actions": [
     {
-      "id": "mark-todo-as-done",
+      "id": "user-mark-done",
       "title": {
         "en": "Mark todo as done",
         "nl": "Markeer activiteit als gereed"
@@ -106,14 +106,14 @@
       ]
     },
     {
-      "id": "mark-all-todos-as-done",
+      "id": "user-mark-all-done",
       "title": {
         "en": "Mark all todos as done",
         "nl": "Markeer alle activiteiten als gereed"
       }
     },
     {
-      "id": "set-status",
+      "id": "user-set-status",
       "title": {
         "en": "Set status",
         "nl": "Pas status aan"

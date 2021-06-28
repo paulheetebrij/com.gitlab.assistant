@@ -24,14 +24,14 @@ class GitLabUserDriver extends Driver {
           })}`
         );
         await this.homey.flow
-          .getDeviceTriggerCard('new-activity')
+          .getDeviceTriggerCard('user-new-todo')
           .trigger(device, { id, project, state, type, title, link, author, body });
       } catch (err) {
         this.error(err);
       }
     });
 
-    const cardActionSetStatus = this.homey.flow.getActionCard('set-status');
+    const cardActionSetStatus = this.homey.flow.getActionCard('user-set-status');
     cardActionSetStatus.registerRunListener(async (args: any) => {
       const { device, message, clear } = args;
       try {
@@ -45,7 +45,7 @@ class GitLabUserDriver extends Driver {
       }
     });
 
-    const cardActionMarkToDoAsDone = this.homey.flow.getActionCard('mark-todo-as-done');
+    const cardActionMarkToDoAsDone = this.homey.flow.getActionCard('user-mark-done');
     cardActionMarkToDoAsDone.registerRunListener(async (args: any) => {
       const { device, id } = args;
       try {
@@ -55,7 +55,7 @@ class GitLabUserDriver extends Driver {
       }
     });
 
-    const cardActionMarkAllToDosAsDone = this.homey.flow.getActionCard('mark-all-todos-as-done');
+    const cardActionMarkAllToDosAsDone = this.homey.flow.getActionCard('user-mark-all-done');
     cardActionMarkAllToDosAsDone.registerRunListener(async (args: any) => {
       const { device } = args;
       try {

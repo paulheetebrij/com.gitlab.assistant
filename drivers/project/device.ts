@@ -2,57 +2,13 @@
 import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
+import {
+  IGitLabCommit,
+  IGitLabIssue,
+  IGitLabIssueStatistics,
+  IGitLabPipeline
+} from '../../gitlabLib/interfaces';
 
-interface IGitLabIssue {
-  id: number;
-  iid: number;
-  project_id: number;
-  title: string;
-  description: string;
-  state: string;
-  created_at: string;
-  updated_at: string;
-  closed_at: string;
-  labels: string[];
-  issue_type: string;
-  web_url: string;
-}
-
-interface IGitLabIssueStatistics {
-  statistics: {
-    counts: {
-      all: number;
-      closed: number;
-      opened: number;
-    };
-  };
-}
-interface IGitLabPipeline {
-  id: number;
-  project_id: number;
-  sha: string;
-  ref: string; // = branch
-  status: string;
-  created_at: string;
-  updated_at: string;
-  web_url: string;
-}
-interface IGitLabCommit {
-  id: string;
-  short_id: string;
-  created_at: string;
-  parent_ids: string[];
-  title: string;
-  message: string;
-  author_name: string;
-  author_email: string;
-  authored_date: string;
-  committer_name: string;
-  committer_email: string;
-  committed_date: string;
-  trailers: {};
-  web_url: string;
-}
 class GitLabProjectDevice extends Device {
   /**
    * onInit is called when the device is initialized.
@@ -279,17 +235,15 @@ class GitLabProjectDevice extends Device {
   private async notifyIssueChanges(issues: IGitLabIssue[]): Promise<void> {
     await issues.forEach(async (i: IGitLabIssue) => {
       try {
-        const { id, iid, project_id, title, issue_type, created_at, updated_at, web_url } = i;
+        const { iid, title, created_at, web_url } = i;
         if (i.updated_at === i.created_at) {
           this.log(`project issue ${iid} created`);
           await this.emit('project_issue_created', {
             device: this,
             iid,
             title,
-            issue_type,
-            link: web_url,
-            created_at,
-            updated_at
+            url: web_url,
+            created: created_at
           });
         } else if (i.closed_at) {
           this.log(`project issue ${iid} closed`);
@@ -297,10 +251,8 @@ class GitLabProjectDevice extends Device {
             device: this,
             iid,
             title,
-            issue_type,
-            link: web_url,
-            created_at,
-            updated_at
+            url: web_url,
+            created: created_at
           });
         } else {
           this.log(`project issue ${iid} updated`);
@@ -308,10 +260,8 @@ class GitLabProjectDevice extends Device {
             device: this,
             iid,
             title,
-            issue_type,
-            link: web_url,
-            created_at,
-            updated_at
+            url: web_url,
+            created: created_at
           });
         }
       } catch (err) {

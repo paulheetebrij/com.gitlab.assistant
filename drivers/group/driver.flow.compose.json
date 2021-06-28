@@ -1,7 +1,7 @@
 {
   "actions": [
     {
-      "id": "add-group-issue",
+      "id": "group-add-issue",
       "title": {
         "en": "Add group issue",
         "nl": "Maak groeps-issue aan"

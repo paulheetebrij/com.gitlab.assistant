@@ -2,12 +2,6 @@
 import Homey from 'homey';
 import fetch from 'node-fetch';
 
-interface IGitLabGroup {
-  id: string;
-  description: string;
-  name: string;
-  web_url: string;
-}
 class GitLabGroupDriver extends Homey.Driver {
   /**
    * onInit is called when the driver is initialized.
@@ -15,20 +9,20 @@ class GitLabGroupDriver extends Homey.Driver {
   async onInit() {
     this.addListener('group_issue_closed', async (args) => {
       try {
-        const { device, iid, title, link, created_at } = args;
+        const { device, iid, title, url, created } = args;
         this.log(
           `Group issue closed ${JSON.stringify({
             iid,
             title,
-            link,
-            created_at
+            url,
+            created
           })}`
         );
         await this.homey.flow.getDeviceTriggerCard('group-issue-closed').trigger(device, {
           iid,
           title,
-          created: created_at,
-          url: link
+          created,
+          url
         });
       } catch (err) {
         this.error(err);
@@ -37,20 +31,20 @@ class GitLabGroupDriver extends Homey.Driver {
 
     this.addListener('group_issue_created', async (args) => {
       try {
-        const { device, iid, title, link, created_at } = args;
+        const { device, iid, title, url, created } = args;
         this.log(
           `Group issue created ${JSON.stringify({
             iid,
             title,
-            link,
-            created_at
+            url,
+            created
           })}`
         );
         await this.homey.flow.getDeviceTriggerCard('group-issue-created').trigger(device, {
           iid,
           title,
-          created: created_at,
-          url: link
+          url,
+          created
         });
       } catch (err) {
         this.error(err);
@@ -59,20 +53,20 @@ class GitLabGroupDriver extends Homey.Driver {
 
     this.addListener('group_issue_updated', async (args) => {
       try {
-        const { device, iid, title, link, created_at } = args;
+        const { device, iid, title, url, created } = args;
         this.log(
           `Group issue updated ${JSON.stringify({
             iid,
             title,
-            link,
-            created_at
+            url,
+            created
           })}`
         );
         await this.homey.flow.getDeviceTriggerCard('group-issue-updated').trigger(device, {
           iid,
           title,
-          created: created_at,
-          url: link
+          url,
+          created
         });
       } catch (err) {
         this.error(err);
@@ -102,7 +96,7 @@ class GitLabGroupDriver extends Homey.Driver {
       }
     );
 
-    const cardActionAddGroupIssue = this.homey.flow.getActionCard('add-group-issue');
+    const cardActionAddGroupIssue = this.homey.flow.getActionCard('group-add-issue');
     cardActionAddGroupIssue.registerRunListener(async (args: any) => {
       const { device, title } = args;
       try {
