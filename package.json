@@ -1,10 +1,9 @@
 {
-  "name": "com.gitlab.issues",
+  "name": "com.gitlab.assistant",
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "preinstall": "homey app add-types",
-    "install": "npm install",
+    "homey-add-types": "homey app add-types",
     "prebuild:prettier-format": "prettier --config .prettierrc '**/*.ts' --write",
     "prebuild:lint": "eslint . --ext .ts --fix",
     "prebuild": "npm run -s prebuild:prettier-format && npm run -s prebuild:lint",
