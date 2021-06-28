@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- The '/homey.js' script must be included in your settings view to work -->
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+</head>
+
+<body>
+  <h1 data-i18n="settings.title">
+    <!-- This will be filled with the translated string with key 'settings.title'. -->
+  </h1>
+  <p data-i18n="settings.subtitle">
+    <!-- This field will also be translated -->
+  </p>
+
+  <fieldset>
+    <legend>Gitlab Api</legend>
+
+    <div class="field row">
+      <label for="key">Private key</label>
+      <input id="key" type="password" value="" />
+    </div>
+  </fieldset>
+
+  <button id="save" class="right">Save changes</button>
+
+  <script type="text/javascript">
+    // a method named 'onHomeyReady' must be present in your code
+    function onHomeyReady(Homey) {
+      // Tell Homey we're ready to be displayed
+      Homey.ready();
+
+      var keyElement = document.getElementById("key");
+      var saveElement = document.getElementById("save");
+
+      Homey.get("key", function (err, key) {
+        if (err) return Homey.alert(err);
+        keyElement.value = key;
+      });
+
+      saveElement.addEventListener("click", function (e) {
+        Homey.set("key", keyElement.value, function (err) {
+          if (err) return Homey.alert(err);
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

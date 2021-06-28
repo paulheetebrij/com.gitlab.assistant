@@ -1,0 +1,14 @@
+{
+  "name": {
+    "en": "User"
+  },
+  "class": "other",
+  "capabilities": [
+    "open_tasks"
+  ],
+  "pair": [
+    {
+      "id": "start"
+    }
+  ]
+}

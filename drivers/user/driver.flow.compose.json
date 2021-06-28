@@ -1,0 +1,199 @@
+{
+  "triggers": [
+    {
+      "id": "new-activity",
+      "title": {
+        "en": "New activity",
+        "nl": "Nieuwe activiteit"
+      },
+      "tokens": [
+        {
+          "type": "number",
+          "name": "id",
+          "title": {
+            "en": "id",
+            "nl": "id"
+          },
+          "example": {
+            "en": "24517568",
+            "nl": "54681265"
+          }
+        },
+        {
+          "type": "string",
+          "name": "author",
+          "title": {
+            "en": "author",
+            "nl": "auteur"
+          },
+          "example": {
+            "en": "Christopher Oliver Worker",
+            "nl": "Mark Ewald de Werker"
+          }
+        },
+        {
+          "type": "string",
+          "name": "body",
+          "title": {
+            "en": "body",
+            "nl": "inhoud"
+          },
+          "example": {
+            "en": "Please fix this bug",
+            "nl": "Svp snel herstellen"
+          }
+        },
+        {
+          "type": "string",
+          "name": "type",
+          "title": {
+            "en": "type"
+          },
+          "example": {
+            "en": "Issue",
+            "nl": "Issue"
+          }
+        },
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Yesterday all the printers went bezerk. Can you figure out what on earth had happened.",
+            "nl": "Gisteren kregen gebruikers zaken op hun scherm die ze niet normaal vinden"
+          }
+        },
+        {
+          "type": "string",
+          "name": "link",
+          "title": {
+            "en": "link",
+            "nl": "link"
+          },
+          "example": {
+            "en": "https://gitlab.com/ .. etc",
+            "nl": "https://gitlab.com/ .. etc"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "mark-todo-as-done",
+      "title": {
+        "en": "Mark todo as done",
+        "nl": "Markeer activiteit als gereed"
+      },
+      "titleFormatted": {
+        "en": "Mark todo #[[id]] as done",
+        "nl": "Markeer activiteit #[[id]] als gereed"
+      },
+      "args": [
+        {
+          "type": "number",
+          "name": "id",
+          "placeholder": {
+            "en": "123546",
+            "nl": "123546"
+          },
+          "min": 1,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "mark-all-todos-as-done",
+      "title": {
+        "en": "Mark all todos as done",
+        "nl": "Markeer alle activiteiten als gereed"
+      }
+    },
+    {
+      "id": "set-status",
+      "title": {
+        "en": "Set status",
+        "nl": "Pas status aan"
+      },
+      "titleFormatted": {
+        "en": "Set status to [[message]]. [[clear]] clear status",
+        "nl": "Zet status naar[[message]]. Verwijder status [[clear]]"
+      },
+      "args": [
+        {
+          "type": "text",
+          "name": "message",
+          "placeholder": {
+            "en": "Very busy, do not disturb",
+            "nl": "Zin in koffie"
+          }
+        },
+        {
+          "type": "dropdown",
+          "name": "clear",
+          "values": [
+            {
+              "id": "no",
+              "label": {
+                "en": "Do not",
+                "nl": "niet"
+              }
+            },
+            {
+              "id": "30-minutes",
+              "label": {
+                "en": "After 30 minutes",
+                "nl": "na 30 minuten"
+              }
+            },
+            {
+              "id": "3-hours",
+              "label": {
+                "en": "After 3 hours",
+                "nl": "na 3 uur"
+              }
+            },
+            {
+              "id": "8-hours",
+              "label": {
+                "en": "After 8 hours",
+                "nl": "na 8 uur"
+              }
+            },
+            {
+              "id": "1-day",
+              "label": {
+                "en": "After 1 day",
+                "nl": "na 1 dag"
+              }
+            },
+            {
+              "id": "3-days",
+              "label": {
+                "en": "After 3 days",
+                "nl": "na 3 dagen"
+              }
+            },
+            {
+              "id": "7-days",
+              "label": {
+                "en": "After 7 days",
+                "nl": "na 7 dagen"
+              }
+            },
+            {
+              "id": "30-days",
+              "label": {
+                "en": "After 30 days",
+                "nl": "na 30 dagen"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

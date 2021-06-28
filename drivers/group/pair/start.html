@@ -1,0 +1,65 @@
+<span data-i18n="group.pair.title">
+  <!-- "My Title" will be placed here -->
+</span>
+<p data-i18n="group.pair.intro">
+  <!-- "This is an example page." will be placed here -->
+</p>
+<fieldset>
+  <legend data-i18n="group.pair.legend"></legend>
+
+  <div class="field row">
+    <label for="gitlab" data-i18n="group.pair.instance"></label>
+    <input type="text" id="gitlab" name="gitlab" value="https://gitlab.com/"><br>
+  </div>
+  <div class="field row">
+    <label for="group" data-i18n="group.pair.group"></label>
+    <input type="text" id="group" name="group" value="">
+  </div>
+  <div class="field row">
+    <label for="token" data-i18n="group.pair.token"></label>
+    <input type="password" id="token" name="token" value="">
+  </div>
+</fieldset>
+
+<button id="save" class="right" data-i18n="group.pair.submit"></button>
+
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("group.pair.title"));
+  const gitlabElement = document.getElementById("gitlab");
+  const groupElement = document.getElementById("group");
+  const tokenElement = document.getElementById("token");
+  const saveElement = document.getElementById("save");
+  saveElement.addEventListener("click", (e) => {
+    Homey.emit("validate_group_settings", {
+      gitlab: gitlabElement.value,
+      group: groupElement.value,
+      token: tokenElement.value,
+    }).then((result) => {
+      const { credentialsAreValid, name } = result;
+      if (credentialsAreValid) {
+        Homey.createDevice({
+          name,
+          data: {
+            id: groupElement.value,
+          },
+          store: {
+            instanceUrl: gitlabElement.value,
+            group: groupElement.value,
+          },
+          settings: {
+            token: tokenElement.value,
+            checkInterval: 3
+          }
+        })
+          .then((result) => {
+            Homey.done();
+          })
+          .catch((error) => {
+            Homey.alert(err);
+          });
+      } else {
+        Homey.alert(Homey.__('group.pair.noAccess'));
+      }
+    });
+  });
+</script>

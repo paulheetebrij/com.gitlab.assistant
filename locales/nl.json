@@ -1,0 +1,42 @@
+{
+  "gitLabError": "Fout bij ophalen gegevens GitLab api",
+  "settings": {
+    "title": "GitLab Configuratie Pagina",
+    "subtitle": "Vul api key in"
+  },
+  "project": {
+    "pair": {
+      "title": "Koppel GitLab project",
+      "intro": "Specificeer de GitLab installatie (standaard gitlab.com), het project id (te kopieren bovenin pagina van project) en een geldig access token met tenminste api_read rechten",
+      "legend": "Project:",
+      "instance": "GitLab installatie",
+      "project": "Project id",
+      "token": "Access token",
+      "submit": "Koppel",
+      "noAccess": "Op basis van deze gegevens kan Homey het project niet koppelen"
+    }
+  },
+  "group": {
+    "pair": {
+      "title": "Koppel GitLab groep",
+      "intro": "Specificeer de GitLab installatie (standaard gitlab.com), het groepsid (te kopieren bovenin pagina van groep) en een geldig access token met tenminste api_read rechten",
+      "legend": "Groep:",
+      "instance": "GitLab installatie",
+      "group": "Groepsid",
+      "token": "Access token",
+      "submit": "Koppel",
+      "noAccess": "Op basis van deze gegevens kan Homey de groep niet koppelen"
+    }
+  },
+  "user": {
+    "pair": {
+      "title": "Koppel GitLab gebruiker",
+      "intro": "Specificeer de GitLab installatie (standaard gitlab.com) en een geldig access token met tenminste api_read en api_write rechten",
+      "legend": "Project:",
+      "instance": "GitLab installatie",
+      "token": "Access token",
+      "submit": "Koppel",
+      "noAccess": "Op basis van deze gegevens kan Homey de gebruiker niet koppelen"
+    }
+  }
+}

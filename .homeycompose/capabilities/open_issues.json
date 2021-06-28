@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Open issues",
+    "nl": "Open issues"
+  },
+  "icon": "/assets/icons/issues.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": true,
+  "insights": true
+}

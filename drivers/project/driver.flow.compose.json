@@ -1,0 +1,304 @@
+{
+  "actions": [
+    {
+      "id": "add-project-issue",
+      "title": {
+        "en": "Add project issue",
+        "nl": "Maak project-issue aan"
+      },
+      "titleFormatted": {
+        "en": "Add project issue: [[title]]",
+        "nl": "Maak project-issue aan: [[title]]"
+      },
+      "args": [
+        {
+          "type": "text",
+          "name": "title",
+          "placeholder": {
+            "en": "title",
+            "nl": "titel"
+          }
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "id": "pipeline-status-changed",
+      "title": {
+        "en": "Pipeline status changed",
+        "nl": "Statuswijziging pipeline"
+      },
+      "tokens": [
+        {
+          "type": "string",
+          "name": "ref",
+          "title": {
+            "en": "ref"
+          },
+          "example": {
+            "en": "master"
+          }
+        },
+        {
+          "type": "string",
+          "name": "status",
+          "title": {
+            "en": "status"
+          },
+          "example": {
+            "en": "running"
+          }
+        },
+        {
+          "type": "string",
+          "name": "updated",
+          "title": {
+            "en": "Updated"
+          },
+          "example": {
+            "en": "2021-06-26T05:39:32.471Z"
+          }
+        },
+        {
+          "type": "string",
+          "name": "url",
+          "title": {
+            "en": "url"
+          },
+          "example": {
+            "en": "https://gitlab.com/USER/PROJECT/-/pipelines/327558556"
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-project-commit",
+      "title": {
+        "en": "New commit",
+        "nl": "Nieuwe commit"
+      },
+      "tokens": [
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Removed all smelly code",
+            "nl": "Alle puntkomma's verwijderd"
+          }
+        },
+        {
+          "type": "string",
+          "name": "message",
+          "title": {
+            "en": "message",
+            "nl": "omschrijving"
+          },
+          "example": {
+            "en": "Removed all smelly code, so now we can start all over",
+            "nl": "Alle puntkomma's verwijderd, daarna alle apostrof tekens omgezet naar aanhalingstekens"
+          }
+        },
+        {
+          "type": "string",
+          "name": "created",
+          "title": {
+            "en": "Created",
+            "nl": "Ontstaan"
+          },
+          "example": {
+            "en": "2021-06-26T05:39:32.471Z",
+            "nl": "2021-06-26T05:39:32.471Z"
+          }
+        },
+        {
+          "type": "string",
+          "name": "url",
+          "title": {
+            "en": "url",
+            "nl": "link"
+          },
+          "example": {
+            "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+            "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+          }
+        }
+      ]
+    },
+    {
+      "id": "project-issue-created",
+      "title": {
+        "en": "New issue",
+        "nl": "Nieuw issue"
+      },
+      "tokens": [
+        {
+          "type": "number",
+          "name": "iid",
+          "title": {
+            "en": "Issue id",
+            "nl": "Issue id"
+          },
+          "example": {
+            "en": "12",
+            "nl": "12"
+          }
+        },
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Removed all smelly code",
+            "nl": "Alle puntkomma's verwijderd"
+          }
+        },
+        {
+          "type": "string",
+          "name": "created",
+          "title": {
+            "en": "Created",
+            "nl": "Ontstaan"
+          },
+          "example": {
+            "en": "2021-06-26T05:39:32.471Z",
+            "nl": "2021-06-26T05:39:32.471Z"
+          }
+        },
+        {
+          "type": "string",
+          "name": "url",
+          "title": {
+            "en": "url",
+            "nl": "link"
+          },
+          "example": {
+            "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+            "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+          }
+        }
+      ]
+    },
+    {
+      "id": "project-issue-updated",
+      "title": {
+        "en": "Issue updated",
+        "nl": "Issue bijgewerkt"
+      },
+      "tokens": [
+        {
+          "type": "number",
+          "name": "iid",
+          "title": {
+            "en": "Issue id",
+            "nl": "Issue id"
+          },
+          "example": {
+            "en": "12",
+            "nl": "12"
+          }
+        },
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Removed all smelly code",
+            "nl": "Alle puntkomma's verwijderd"
+          }
+        },
+        {
+          "type": "string",
+          "name": "created",
+          "title": {
+            "en": "Created",
+            "nl": "Ontstaan"
+          },
+          "example": {
+            "en": "2021-06-26T05:39:32.471Z",
+            "nl": "2021-06-26T05:39:32.471Z"
+          }
+        },
+        {
+          "type": "string",
+          "name": "url",
+          "title": {
+            "en": "url",
+            "nl": "link"
+          },
+          "example": {
+            "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+            "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+          }
+        }
+      ]
+    },
+    {
+      "id": "project-issue-closed",
+      "title": {
+        "en": "Issue closed",
+        "nl": "Issue gesloten"
+      },
+      "tokens": [
+        {
+          "type": "number",
+          "name": "iid",
+          "title": {
+            "en": "Issue id",
+            "nl": "Issue id"
+          },
+          "example": {
+            "en": "12",
+            "nl": "12"
+          }
+        },
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Removed all smelly code",
+            "nl": "Alle puntkomma's verwijderd"
+          }
+        },
+        {
+          "type": "string",
+          "name": "created",
+          "title": {
+            "en": "Created",
+            "nl": "Ontstaan"
+          },
+          "example": {
+            "en": "2021-06-26T05:39:32.471Z",
+            "nl": "2021-06-26T05:39:32.471Z"
+          }
+        },
+        {
+          "type": "string",
+          "name": "url",
+          "title": {
+            "en": "url",
+            "nl": "link"
+          },
+          "example": {
+            "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+            "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+          }
+        }
+      ]
+    }
+  ]
+}

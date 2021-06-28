@@ -1,0 +1,58 @@
+<span data-i18n="user.pair.title">
+  <!-- "My Title" will be placed here -->
+</span>
+<p data-i18n="user.pair.intro">
+  <!-- "This is an example page." will be placed here -->
+</p>
+<fieldset>
+  <legend data-i18n="user.pair.legend"></legend>
+
+  <div class="field row">
+    <label for="gitlab" data-i18n="user.pair.instance"></label>
+    <input type="text" id="gitlab" name="gitlab" value="https://gitlab.com/"><br>
+  </div>
+  <div class="field row">
+    <label for="token" data-i18n="user.pair.token"></label>
+    <input type="password" id="token" name="token" value="">
+  </div>
+</fieldset>
+
+<button id="save" class="right" data-i18n="project.pair.submit"></button>
+
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("project.pair.title"));
+  const gitlabElement = document.getElementById("gitlab");
+  const tokenElement = document.getElementById("token");
+  const saveElement = document.getElementById("save");
+  saveElement.addEventListener("click", (e) => {
+    Homey.emit("validate_user_settings", {
+      gitlab: gitlabElement.value,
+      token: tokenElement.value,
+    }).then((result) => {
+      const { credentialsAreValid, id, name } = result;
+      if (credentialsAreValid) {
+        Homey.createDevice({
+          name,
+          data: {
+            id,
+          },
+          store: {
+            instanceUrl: gitlabElement.value,
+          },
+          settings: {
+            token: tokenElement.value,
+            checkInterval: 3
+          }
+        })
+          .then((result) => {
+            Homey.done();
+          })
+          .catch((error) => {
+            Homey.alert(err);
+          });
+      } else {
+        Homey.alert(Homey.__('user.pair.noAccess'));
+      }
+    });
+  });
+</script>

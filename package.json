@@ -1,0 +1,52 @@
+{
+  "name": "com.gitlab.issues",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "scripts": {
+    "preinstall": "homey app add-types",
+    "install": "npm install",
+    "prebuild:prettier-format": "prettier --config .prettierrc '**/*.ts' --write",
+    "prebuild:lint": "eslint . --ext .ts --fix",
+    "prebuild": "npm run -s prebuild:prettier-format && npm run -s prebuild:lint",
+    "build": "tsc",
+    "validate": "homey app validate",
+    "create-driver-flow": "homey app driver flow",
+    "local-run": "homey app run",
+    "test:mocha": "mocha --exit -r ts-node/register",
+    "test": "npm run -s test:mocha **/*.spec.ts",
+    "local-install": "homey app install",
+    "precm": "npm run -s build && npm run -s test",
+    "cm": "npx git-cz",
+    "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
+  },
+  "dependencies": {
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "source-map-support": "^0.5.19",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node12": "^1.0.9",
+    "@types/chai": "^4.2.18",
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.2.2",
+    "@types/mocha": "^8.2.2",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^15.12.4",
+    "@types/node-fetch": "^2.5.10",
+    "@types/sinon": "^10.0.2",
+    "@types/source-map-support": "^0.5.3",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "chai": "^4.3.4",
+    "eslint": "^7.28.0",
+    "eslint-config-athom": "^2.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "mocha": "^9.0.0",
+    "onchange": "^7.1.0",
+    "prettier": "^2.3.1",
+    "sinon": "^11.1.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}

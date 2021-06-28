@@ -1,0 +1,16 @@
+{
+  "name": {
+    "en": "Project"
+  },
+  "class": "other",
+  "capabilities": [
+    "open_issues",
+    "last_build",
+    "last_commit"
+  ],
+  "pair": [
+    {
+      "id": "start"
+    }
+  ]
+}

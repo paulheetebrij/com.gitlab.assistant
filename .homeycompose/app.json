@@ -1,0 +1,26 @@
+{
+  "id": "com.gitlab.issues",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#534886",
+  "name": {
+    "en": "GitLab"
+  },
+  "description": {
+    "en": "Accelerate modern DevOps."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Paul Heetebrij",
+    "email": "paul.heetebrij@freedom.nl"
+  }
+}

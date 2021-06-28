@@ -1,0 +1,981 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.gitlab.issues",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#534886",
+  "name": {
+    "en": "GitLab"
+  },
+  "description": {
+    "en": "Accelerate modern DevOps."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Paul Heetebrij",
+    "email": "paul.heetebrij@freedom.nl"
+  },
+  "flow": {
+    "actions": [
+      {
+        "id": "add-group-issue",
+        "title": {
+          "en": "Add group issue",
+          "nl": "Maak groeps-issue aan"
+        },
+        "titleFormatted": {
+          "en": "Add group issue: [[title]]",
+          "nl": "Maak groeps-issue aan: [[title]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          },
+          {
+            "type": "text",
+            "name": "title",
+            "placeholder": {
+              "en": "title",
+              "nl": "titel"
+            }
+          }
+        ]
+      },
+      {
+        "id": "group-issue-created",
+        "title": {
+          "en": "New issue",
+          "nl": "Nieuw issue"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          }
+        ]
+      },
+      {
+        "id": "group-issue-updated",
+        "title": {
+          "en": "Issue updated",
+          "nl": "Issue bijgewerkt"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          }
+        ]
+      },
+      {
+        "id": "group-issue-closed",
+        "title": {
+          "en": "Issue closed",
+          "nl": "Issue gesloten"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          }
+        ]
+      },
+      {
+        "id": "add-project-issue",
+        "title": {
+          "en": "Add project issue",
+          "nl": "Maak project-issue aan"
+        },
+        "titleFormatted": {
+          "en": "Add project issue: [[title]]",
+          "nl": "Maak project-issue aan: [[title]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          },
+          {
+            "type": "text",
+            "name": "title",
+            "placeholder": {
+              "en": "title",
+              "nl": "titel"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mark-todo-as-done",
+        "title": {
+          "en": "Mark todo as done",
+          "nl": "Markeer activiteit als gereed"
+        },
+        "titleFormatted": {
+          "en": "Mark todo #[[id]] as done",
+          "nl": "Markeer activiteit #[[id]] als gereed"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          },
+          {
+            "type": "number",
+            "name": "id",
+            "placeholder": {
+              "en": "123546",
+              "nl": "123546"
+            },
+            "min": 1,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "mark-all-todos-as-done",
+        "title": {
+          "en": "Mark all todos as done",
+          "nl": "Markeer alle activiteiten als gereed"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          }
+        ]
+      },
+      {
+        "id": "set-status",
+        "title": {
+          "en": "Set status",
+          "nl": "Pas status aan"
+        },
+        "titleFormatted": {
+          "en": "Set status to [[message]]. [[clear]] clear status",
+          "nl": "Zet status naar[[message]]. Verwijder status [[clear]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          },
+          {
+            "type": "text",
+            "name": "message",
+            "placeholder": {
+              "en": "Very busy, do not disturb",
+              "nl": "Zin in koffie"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "clear",
+            "values": [
+              {
+                "id": "no",
+                "label": {
+                  "en": "Do not",
+                  "nl": "niet"
+                }
+              },
+              {
+                "id": "30-minutes",
+                "label": {
+                  "en": "After 30 minutes",
+                  "nl": "na 30 minuten"
+                }
+              },
+              {
+                "id": "3-hours",
+                "label": {
+                  "en": "After 3 hours",
+                  "nl": "na 3 uur"
+                }
+              },
+              {
+                "id": "8-hours",
+                "label": {
+                  "en": "After 8 hours",
+                  "nl": "na 8 uur"
+                }
+              },
+              {
+                "id": "1-day",
+                "label": {
+                  "en": "After 1 day",
+                  "nl": "na 1 dag"
+                }
+              },
+              {
+                "id": "3-days",
+                "label": {
+                  "en": "After 3 days",
+                  "nl": "na 3 dagen"
+                }
+              },
+              {
+                "id": "7-days",
+                "label": {
+                  "en": "After 7 days",
+                  "nl": "na 7 dagen"
+                }
+              },
+              {
+                "id": "30-days",
+                "label": {
+                  "en": "After 30 days",
+                  "nl": "na 30 dagen"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "id": "pipeline-status-changed",
+        "title": {
+          "en": "Pipeline status changed",
+          "nl": "Statuswijziging pipeline"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "ref",
+            "title": {
+              "en": "ref"
+            },
+            "example": {
+              "en": "master"
+            }
+          },
+          {
+            "type": "string",
+            "name": "status",
+            "title": {
+              "en": "status"
+            },
+            "example": {
+              "en": "running"
+            }
+          },
+          {
+            "type": "string",
+            "name": "updated",
+            "title": {
+              "en": "Updated"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/pipelines/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "new-project-commit",
+        "title": {
+          "en": "New commit",
+          "nl": "Nieuwe commit"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "message",
+            "title": {
+              "en": "message",
+              "nl": "omschrijving"
+            },
+            "example": {
+              "en": "Removed all smelly code, so now we can start all over",
+              "nl": "Alle puntkomma's verwijderd, daarna alle apostrof tekens omgezet naar aanhalingstekens"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "project-issue-created",
+        "title": {
+          "en": "New issue",
+          "nl": "Nieuw issue"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "project-issue-updated",
+        "title": {
+          "en": "Issue updated",
+          "nl": "Issue bijgewerkt"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "project-issue-closed",
+        "title": {
+          "en": "Issue closed",
+          "nl": "Issue gesloten"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "iid",
+            "title": {
+              "en": "Issue id",
+              "nl": "Issue id"
+            },
+            "example": {
+              "en": "12",
+              "nl": "12"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Removed all smelly code",
+              "nl": "Alle puntkomma's verwijderd"
+            }
+          },
+          {
+            "type": "string",
+            "name": "created",
+            "title": {
+              "en": "Created",
+              "nl": "Ontstaan"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z",
+              "nl": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/commit/327558556",
+              "nl": "https://gitlab.com/USER/PROJECT/-/commit/327558556"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "new-activity",
+        "title": {
+          "en": "New activity",
+          "nl": "Nieuwe activiteit"
+        },
+        "tokens": [
+          {
+            "type": "number",
+            "name": "id",
+            "title": {
+              "en": "id",
+              "nl": "id"
+            },
+            "example": {
+              "en": "24517568",
+              "nl": "54681265"
+            }
+          },
+          {
+            "type": "string",
+            "name": "author",
+            "title": {
+              "en": "author",
+              "nl": "auteur"
+            },
+            "example": {
+              "en": "Christopher Oliver Worker",
+              "nl": "Mark Ewald de Werker"
+            }
+          },
+          {
+            "type": "string",
+            "name": "body",
+            "title": {
+              "en": "body",
+              "nl": "inhoud"
+            },
+            "example": {
+              "en": "Please fix this bug",
+              "nl": "Svp snel herstellen"
+            }
+          },
+          {
+            "type": "string",
+            "name": "type",
+            "title": {
+              "en": "type"
+            },
+            "example": {
+              "en": "Issue",
+              "nl": "Issue"
+            }
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "title": {
+              "en": "title",
+              "nl": "titel"
+            },
+            "example": {
+              "en": "Yesterday all the printers went bezerk. Can you figure out what on earth had happened.",
+              "nl": "Gisteren kregen gebruikers zaken op hun scherm die ze niet normaal vinden"
+            }
+          },
+          {
+            "type": "string",
+            "name": "link",
+            "title": {
+              "en": "link",
+              "nl": "link"
+            },
+            "example": {
+              "en": "https://gitlab.com/ .. etc",
+              "nl": "https://gitlab.com/ .. etc"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Group",
+        "nl": "Groep"
+      },
+      "class": "other",
+      "capabilities": [
+        "open_issues"
+      ],
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
+      "id": "group",
+      "settings": [
+        {
+          "id": "token",
+          "type": "password",
+          "label": {
+            "en": "Private access token",
+            "nl": "Access token voor groep"
+          }
+        },
+        {
+          "id": "checkInterval",
+          "type": "number",
+          "label": {
+            "en": "Check for new activities every",
+            "nl": "Controleer op nieuwe activiteiten elke"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 60,
+          "units": {
+            "en": "minutes",
+            "nl": "minuten"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Project"
+      },
+      "class": "other",
+      "capabilities": [
+        "open_issues",
+        "last_build",
+        "last_commit"
+      ],
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
+      "id": "project",
+      "settings": [
+        {
+          "id": "token",
+          "type": "password",
+          "label": {
+            "en": "Private access token",
+            "nl": "Access token voor project"
+          }
+        },
+        {
+          "id": "checkInterval",
+          "type": "number",
+          "label": {
+            "en": "Check for new activities every",
+            "nl": "Controleer op nieuwe activiteiten elke"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 60,
+          "units": {
+            "en": "minutes",
+            "nl": "minuten"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "User"
+      },
+      "class": "other",
+      "capabilities": [
+        "open_tasks"
+      ],
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
+      "id": "user",
+      "settings": [
+        {
+          "id": "token",
+          "type": "password",
+          "label": {
+            "en": "Private access token",
+            "nl": "Access token voor gebruiker"
+          }
+        },
+        {
+          "id": "checkInterval",
+          "type": "number",
+          "label": {
+            "en": "Check for new activities every",
+            "nl": "Controleer op nieuwe activiteiten elke"
+          },
+          "value": 5,
+          "min": 1,
+          "max": 60,
+          "units": {
+            "en": "minutes",
+            "nl": "minuten"
+          }
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "last_build": {
+      "type": "string",
+      "title": {
+        "en": "Last build",
+        "nl": "Laatste build"
+      },
+      "icon": "/assets/icons/pipeline.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": true,
+      "insights": false
+    },
+    "last_commit": {
+      "type": "string",
+      "title": {
+        "en": "Last commit",
+        "nl": "Laatste commit"
+      },
+      "icon": "/assets/icons/commit.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": true,
+      "insights": false
+    },
+    "open_issues": {
+      "type": "number",
+      "title": {
+        "en": "Open issues",
+        "nl": "Open issues"
+      },
+      "icon": "/assets/icons/issues.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": true,
+      "insights": true
+    },
+    "open_tasks": {
+      "type": "number",
+      "title": {
+        "en": "Open tasks",
+        "nl": "Openstaande taken"
+      },
+      "icon": "/assets/icons/task-list.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": true,
+      "insights": true
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Last build",
+    "nl": "Laatste build"
+  },
+  "icon": "/assets/icons/pipeline.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": true,
+  "insights": false
+}

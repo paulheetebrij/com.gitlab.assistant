@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Last commit",
+    "nl": "Laatste commit"
+  },
+  "icon": "/assets/icons/commit.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": true,
+  "insights": false
+}

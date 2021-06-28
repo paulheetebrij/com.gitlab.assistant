@@ -1,0 +1,15 @@
+{
+  "name": {
+    "en": "Group",
+    "nl": "Groep"
+  },
+  "class": "other",
+  "capabilities": [
+    "open_issues"
+  ],
+  "pair": [
+    {
+      "id": "start"
+    }
+  ]
+}

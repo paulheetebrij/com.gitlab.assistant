@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Open tasks",
+    "nl": "Openstaande taken"
+  },
+  "icon": "/assets/icons/task-list.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": true,
+  "insights": true
+}

@@ -1,0 +1,42 @@
+{
+  "gitLabError": "Error retrieving data GitLab api",
+  "settings": {
+    "title": "GitLab Settings Page",
+    "subtitle": "Please configure api"
+  },
+  "project": {
+    "pair": {
+      "title": "Pair GitLab project",
+      "intro": "Specify GitLab instance (default is gitlab.com), the project id (you can find it at the left side on top of the project page in GitLab) and a valid access token having api_read rights",
+      "legend": "Project:",
+      "instance": "GitLab instance",
+      "group": "Project id",
+      "token": "Access token",
+      "submit": "Pair",
+      "noAccess": "Based on your input, Homey cannot pair the project"
+    }
+  },
+  "group": {
+    "pair": {
+      "title": "Pair GitLab group",
+      "intro": "Specify GitLab instance (default is gitlab.com), the group id (you can find it at the left side on top of the group page in GitLab) and a valid access token having api_read rights",
+      "legend": "Group:",
+      "instance": "GitLab instance",
+      "project": "Group id",
+      "token": "Access token",
+      "submit": "Pair",
+      "noAccess": "Based on your input, Homey cannot pair the group"
+    }
+  },
+  "user": {
+    "pair": {
+      "title": "Pair GitLab user",
+      "intro": "Specify GitLab instance (default is gitlab.com) and a valid access token having api_read and api_write rights",
+      "legend": "User:",
+      "instance": "GitLab instance",
+      "token": "Access token",
+      "submit": "Pair",
+      "noAccess": "Based on your input, Homey cannot pair the user"
+    }
+  }
+}
