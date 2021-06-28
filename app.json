@@ -6,10 +6,12 @@
   "sdk": 3,
   "brandColor": "#534886",
   "name": {
-    "en": "GitLab"
+    "en": "GitLab assistant",
+    "nl": "GitLab assistant"
   },
   "description": {
-    "en": "Accelerate modern DevOps."
+    "en": "Accelerate modern DevOps. Automate monitoring for common changes like issue status and new todo items",
+    "nl": "Accelerate modern DevOps. Automatiseer monitoring van issue wijzigingen en nieuwe todo items"
   },
   "category": [
     "tools"
@@ -21,13 +23,20 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "Paul Heetebrij",
-    "email": "paul.heetebrij@freedom.nl"
+    "name": "Paul Heetebrij"
   },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "paulheetebrij"
+      }
+    }
+  },
+  "source": "https://github.com/paulheetebrij/com.gitlab.assistant",
   "flow": {
     "actions": [
       {
-        "id": "add-group-issue",
+        "id": "group-add-issue",
         "title": {
           "en": "Add group issue",
           "nl": "Maak groeps-issue aan"
@@ -245,7 +254,7 @@
         ]
       },
       {
-        "id": "add-project-issue",
+        "id": "project-add-issue",
         "title": {
           "en": "Add project issue",
           "nl": "Maak project-issue aan"
@@ -271,7 +280,7 @@
         ]
       },
       {
-        "id": "mark-todo-as-done",
+        "id": "user-mark-done",
         "title": {
           "en": "Mark todo as done",
           "nl": "Markeer activiteit als gereed"
@@ -299,7 +308,7 @@
         ]
       },
       {
-        "id": "mark-all-todos-as-done",
+        "id": "user-mark-all-done",
         "title": {
           "en": "Mark all todos as done",
           "nl": "Markeer alle activiteiten als gereed"
@@ -313,7 +322,7 @@
         ]
       },
       {
-        "id": "set-status",
+        "id": "user-set-status",
         "title": {
           "en": "Set status",
           "nl": "Pas status aan"
@@ -403,7 +412,7 @@
     ],
     "triggers": [
       {
-        "id": "pipeline-status-changed",
+        "id": "project-pipeline-status-changed",
         "title": {
           "en": "Pipeline status changed",
           "nl": "Statuswijziging pipeline"
@@ -459,7 +468,7 @@
         ]
       },
       {
-        "id": "new-project-commit",
+        "id": "project-new-commit",
         "title": {
           "en": "New commit",
           "nl": "Nieuwe commit"
@@ -715,7 +724,7 @@
         ]
       },
       {
-        "id": "new-activity",
+        "id": "user-new-todo",
         "title": {
           "en": "New activity",
           "nl": "Nieuwe activiteit"
@@ -810,6 +819,10 @@
         "nl": "Groep"
       },
       "class": "other",
+      "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+      },
       "capabilities": [
         "open_issues"
       ],
@@ -850,6 +863,10 @@
         "en": "Project"
       },
       "class": "other",
+      "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+      },
       "capabilities": [
         "open_issues",
         "last_build",
@@ -892,6 +909,10 @@
         "en": "User"
       },
       "class": "other",
+      "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+      },
       "capabilities": [
         "open_tasks"
       ],
