@@ -4,8 +4,8 @@
   },
   "class": "other",
   "images": {
-    "small": "/assets/images/small.png",
-    "large": "/assets/images/large.png"
+    "small": "/drivers/user/assets/images/small.png",
+    "large": "/drivers/user/assets/images/large.png"
   },
   "capabilities": [
     "open_tasks"

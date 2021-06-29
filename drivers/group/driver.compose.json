@@ -5,8 +5,8 @@
   },
   "class": "other",
   "images": {
-    "small": "/assets/images/small.png",
-    "large": "/assets/images/large.png"
+    "small": "/drivers/group/assets/images/small.png",
+    "large": "/drivers/group/assets/images/large.png"
   },
   "capabilities": [
     "open_issues"

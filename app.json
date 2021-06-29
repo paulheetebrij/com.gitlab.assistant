@@ -18,9 +18,9 @@
   ],
   "permissions": [],
   "images": {
-    "small": "/assets/images/small.png",
-    "large": "/assets/images/large.png",
-    "xlarge": "/assets/images/xlarge.png"
+    "small": "/assets/images/small.jpg",
+    "large": "/assets/images/large.jpg",
+    "xlarge": "/assets/images/xlarge.jpg"
   },
   "author": {
     "name": "Paul Heetebrij"
@@ -820,8 +820,8 @@
       },
       "class": "other",
       "images": {
-        "small": "/assets/images/small.png",
-        "large": "/assets/images/large.png"
+        "small": "/drivers/group/assets/images/small.png",
+        "large": "/drivers/group/assets/images/large.png"
       },
       "capabilities": [
         "open_issues"
@@ -864,8 +864,8 @@
       },
       "class": "other",
       "images": {
-        "small": "/assets/images/small.png",
-        "large": "/assets/images/large.png"
+        "small": "/drivers/project/assets/images/small.png",
+        "large": "/drivers/project/assets/images/large.png"
       },
       "capabilities": [
         "open_issues",
@@ -910,8 +910,8 @@
       },
       "class": "other",
       "images": {
-        "small": "/assets/images/small.png",
-        "large": "/assets/images/large.png"
+        "small": "/drivers/user/assets/images/small.png",
+        "large": "/drivers/user/assets/images/large.png"
       },
       "capabilities": [
         "open_tasks"
