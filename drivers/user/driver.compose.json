@@ -8,6 +8,7 @@
     "large": "/drivers/user/assets/images/large.png"
   },
   "capabilities": [
+    "open_issues",
     "open_tasks"
   ],
   "pair": [
