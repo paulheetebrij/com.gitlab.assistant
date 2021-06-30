@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { IGitLabIssue } from '../../gitlabLib/interfaces';
+import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
 
 enum ClearStatusAfter {
   ClearAfter30Minutes = '30_minutes',
@@ -61,6 +61,7 @@ interface IGitLabToDoItem {
   created_at: string;
   updated_at: string;
 }
+const pollerEvent = 'nextPoll';
 class GitLabUserDevice extends Homey.Device {
   /**
    * onInit is called when the device is initialized.
@@ -74,6 +75,12 @@ class GitLabUserDevice extends Homey.Device {
       await this.addCapability('open_issues');
     }
 
+    this.addListener(pollerEvent, async () => {
+      await this.handleToDos().catch(this.error);
+    });
+    this.addListener(pollerEvent, async () => {
+      await this.handleMyIssues().catch(this.error);
+    });
     await this.poller();
   }
 
@@ -175,9 +182,32 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
+  private async getMyIssueStatistics(): Promise<IGitLabIssueStatistics> {
+    let response: any; // eslint-disable-line;
+    //GET /issues_statistics?author_id=5
+    //GET / issues_statistics ? assignee_id = 5
+    const url = `${this.myApiUrl}issues_statistics/?assignee_id=${this.id}&state=opened`;
+    try {
+      let headers: any = { Authorization: `Bearer ${this.token}` };
+      response = await fetch(url, { headers });
+      if (!response.ok) {
+        throw new Error(this.homey.__('gitLabError'));
+      }
+      return await response.json();
+    } catch (err) {
+      if (err.status === 401) {
+        await this.setUnavailable();
+      }
+      this.log(`Error retrieving url: ${url}`);
+      this.log(`Response: ${JSON.stringify(response)}`);
+      this.error(err);
+      throw err;
+    }
+  }
+
   private async getTodos(): Promise<IGitLabToDoItem[]> {
     let response: any; // eslint-disable-line;
-    const url = `${this.myApiUrl}todos`;
+    const url = `${this.myApiUrl}todos?state=pending`;
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
       response = await fetch(url, { headers });
@@ -242,8 +272,9 @@ class GitLabUserDevice extends Homey.Device {
 
   private async poller(): Promise<void> {
     if (this.getAvailable()) {
-      await this.handleToDos().catch(this.error);
-      await this.handleMyIssues().catch(this.error);
+      this.emit(pollerEvent);
+    } else {
+      this.log(`User unavailable`);
     }
 
     setTimeout(() => this.poller().catch(this.error), this.checkInterval);
@@ -252,6 +283,7 @@ class GitLabUserDevice extends Homey.Device {
   private async handleToDos(): Promise<void> {
     const tasks = await this.getTodos();
 
+    this.log(`Open tasks: ${tasks.length}`);
     await this.setCapabilityValue('open_tasks', tasks.length).catch(this.error);
 
     if (tasks.length !== 0) {
@@ -273,9 +305,13 @@ class GitLabUserDevice extends Homey.Device {
   }
 
   private async handleMyIssues(): Promise<void> {
-    const tasks = await this.getMyIssues();
-
-    await this.setCapabilityValue('open_issues', tasks.length).catch(this.error);
+    // const tasks = await this.getMyIssues();
+    try {
+      const { statistics } = await this.getMyIssueStatistics();
+      await this.setCapabilityValue('open_issues', statistics.counts.opened);
+    } catch (err) {
+      this.error(err);
+    }
   }
 
   /**

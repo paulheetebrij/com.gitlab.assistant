@@ -4,12 +4,20 @@ import fetch from 'node-fetch';
 import moment from 'moment';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
 
+const pollerEvent = 'nextPoll';
 class GitLabGroupDevice extends Device {
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
     this.log('GitLab group has been initialized');
+    this.addListener(pollerEvent, async () => {
+      await this.handleIssues().catch(this.error);
+    });
+    this.addListener(pollerEvent, async () => {
+      await this.handleIssueStatistics().catch(this.error);
+    });
+
     await this.poller();
   }
 
@@ -117,8 +125,7 @@ class GitLabGroupDevice extends Device {
 
   private async poller(): Promise<void> {
     if (this.getAvailable()) {
-      await this.handleIssues().catch(this.error);
-      await this.handleIssueStatistics().catch(this.error);
+      this.emit(pollerEvent);
     }
 
     setTimeout(() => this.poller().catch(this.error), this.checkInterval);

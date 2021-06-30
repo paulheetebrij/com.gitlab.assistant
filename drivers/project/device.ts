@@ -9,13 +9,27 @@ import {
   IGitLabPipeline
 } from '../../gitlabLib/interfaces';
 
+const pollerEvent = 'nextPoll';
 class GitLabProjectDevice extends Device {
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
     this.log('GitLab project has been initialized');
-    //https://gitlab.com/api/v4/projects/24592108/issues
+    // https://gitlab.com/api/v4/projects/24592108/issues
+
+    this.addListener(pollerEvent, async () => {
+      await this.handleIssues().catch(this.error);
+    });
+    this.addListener(pollerEvent, async () => {
+      await this.handleCommits().catch(this.error);
+    });
+    this.addListener(pollerEvent, async () => {
+      await this.handlePipelineChanges().catch(this.error);
+    });
+    this.addListener(pollerEvent, async () => {
+      await this.handleIssueStatistics().catch(this.error);
+    });
 
     await this.poller();
   }
@@ -303,10 +317,7 @@ class GitLabProjectDevice extends Device {
 
   private async poller(): Promise<void> {
     if (this.getAvailable()) {
-      await this.handleIssues().catch(this.error);
-      await this.handleCommits().catch(this.error);
-      await this.handlePipelineChanges().catch(this.error);
-      await this.handleIssueStatistics().catch(this.error);
+      this.emit(pollerEvent);
     }
 
     setTimeout(() => this.poller().catch(this.error), this.checkInterval);
