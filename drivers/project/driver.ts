@@ -69,7 +69,7 @@ class GitLabProjectDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('project-issue-closed').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('project-my-issue-closed').trigger(device, {
           iid,
           title,
           url,
@@ -91,7 +91,7 @@ class GitLabProjectDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('project-issue-created').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('project-my-issue-created').trigger(device, {
           iid,
           title,
           url,
@@ -113,7 +113,7 @@ class GitLabProjectDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('project-issue-updated').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('project-my-issue-updated').trigger(device, {
           iid,
           title,
           url,
@@ -124,7 +124,7 @@ class GitLabProjectDriver extends Homey.Driver {
       }
     });
 
-    const cardActionAddProjectIssue = this.homey.flow.getActionCard('project-add-issue');
+    const cardActionAddProjectIssue = this.homey.flow.getActionCard('project-create-issue');
     cardActionAddProjectIssue.registerRunListener(async (args: any) => {
       const { device, title } = args;
       try {

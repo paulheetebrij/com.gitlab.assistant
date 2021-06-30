@@ -1,9 +1,9 @@
 {
   "actions": [
     {
-      "id": "group-add-issue",
+      "id": "group-create-issue",
       "title": {
-        "en": "Add group issue",
+        "en": "Create group issue",
         "nl": "Maak groeps-issue aan"
       },
       "titleFormatted": {
@@ -22,10 +22,10 @@
       ]
     },
     {
-      "id": "group-issue-created",
+      "id": "group-my-issue-created",
       "title": {
-        "en": "New issue",
-        "nl": "Nieuw issue"
+        "en": "New issue by me",
+        "nl": "Nieuw issue van mij"
       },
       "tokens": [
         {
@@ -79,10 +79,10 @@
       ]
     },
     {
-      "id": "group-issue-updated",
+      "id": "group-my-issue-updated",
       "title": {
-        "en": "Issue updated",
-        "nl": "Issue bijgewerkt"
+        "en": "My issue is updated",
+        "nl": "Mijn Issue is bijgewerkt"
       },
       "tokens": [
         {
@@ -136,10 +136,10 @@
       ]
     },
     {
-      "id": "group-issue-closed",
+      "id": "group-my-issue-closed",
       "title": {
-        "en": "Issue closed",
-        "nl": "Issue gesloten"
+        "en": "My issue is closed",
+        "nl": "Mijn issue is gesloten"
       },
       "tokens": [
         {

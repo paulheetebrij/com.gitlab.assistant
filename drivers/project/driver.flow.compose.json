@@ -1,9 +1,9 @@
 {
   "actions": [
     {
-      "id": "project-add-issue",
+      "id": "project-create-issue",
       "title": {
-        "en": "Add project issue",
+        "en": "Create project issue",
         "nl": "Maak project-issue aan"
       },
       "titleFormatted": {
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "id": "project-issue-created",
+      "id": "project-my-issue-created",
       "title": {
-        "en": "New issue",
-        "nl": "Nieuw issue"
+        "en": "New issue by me",
+        "nl": "Nieuw issue van mij"
       },
       "tokens": [
         {
@@ -187,10 +187,10 @@
       ]
     },
     {
-      "id": "project-issue-updated",
+      "id": "project-my-issue-updated",
       "title": {
-        "en": "Issue updated",
-        "nl": "Issue bijgewerkt"
+        "en": "My issue is updated",
+        "nl": "Mijn Issue is bijgewerkt"
       },
       "tokens": [
         {
@@ -244,10 +244,10 @@
       ]
     },
     {
-      "id": "project-issue-closed",
+      "id": "project-my-issue-closed",
       "title": {
-        "en": "Issue closed",
-        "nl": "Issue gesloten"
+        "en": "My issue is closed",
+        "nl": "Mijn issue is gesloten"
       },
       "tokens": [
         {

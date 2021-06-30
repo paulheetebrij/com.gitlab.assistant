@@ -18,7 +18,7 @@ class GitLabGroupDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('group-issue-closed').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('group-my-issue-closed').trigger(device, {
           iid,
           title,
           created,
@@ -40,7 +40,7 @@ class GitLabGroupDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('group-issue-created').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('group-my-issue-created').trigger(device, {
           iid,
           title,
           url,
@@ -62,7 +62,7 @@ class GitLabGroupDriver extends Homey.Driver {
             created
           })}`
         );
-        await this.homey.flow.getDeviceTriggerCard('group-issue-updated').trigger(device, {
+        await this.homey.flow.getDeviceTriggerCard('group-my-issue-updated').trigger(device, {
           iid,
           title,
           url,
@@ -96,7 +96,7 @@ class GitLabGroupDriver extends Homey.Driver {
       }
     );
 
-    const cardActionAddGroupIssue = this.homey.flow.getActionCard('group-add-issue');
+    const cardActionAddGroupIssue = this.homey.flow.getActionCard('group-create-issue');
     cardActionAddGroupIssue.registerRunListener(async (args: any) => {
       const { device, title } = args;
       try {
