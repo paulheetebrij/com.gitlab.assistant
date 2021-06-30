@@ -7,73 +7,40 @@ class GitLabGroupDriver extends Homey.Driver {
    * onInit is called when the driver is initialized.
    */
   async onInit() {
-    this.addListener('group_issue_closed', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Group issue closed ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('group-my-issue-closed').trigger(device, {
-          iid,
-          title,
-          created,
-          url
-        });
-      } catch (err) {
-        this.error(err);
-      }
-    });
-
-    this.addListener('group_issue_created', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Group issue created ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('group-my-issue-created').trigger(device, {
-          iid,
-          title,
-          url,
-          created
-        });
-      } catch (err) {
-        this.error(err);
-      }
-    });
-
-    this.addListener('group_issue_updated', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Group issue updated ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('group-my-issue-updated').trigger(device, {
-          iid,
-          title,
-          url,
-          created
-        });
-      } catch (err) {
-        this.error(err);
-      }
-    });
-
     this.log('GitLab group has been initialized');
+
+    const cardTriggerIssueClosed = this.homey.flow.getDeviceTriggerCard('group-my-issue-closed');
+    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('group-my-issue-created');
+    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard('group-my-issue-updated');
+    this.addListener('myGroupIssueClosed', async (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueClosed.trigger(device, {
+        iid,
+        title,
+        created,
+        url
+      });
+    });
+
+    this.addListener('myGroupIssueCreated', async (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueOpened.trigger(device, {
+        iid,
+        title,
+        created,
+        url
+      });
+    });
+
+    this.addListener('myGroupIssueUpdated', async (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueChanged.trigger(device, {
+        iid,
+        title,
+        created,
+        url
+      });
+    });
   }
 
   async onPair(session: any) {

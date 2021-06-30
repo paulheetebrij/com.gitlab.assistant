@@ -20,7 +20,9 @@
           }
         }
       ]
-    },
+    }
+  ],
+  "triggers": [
     {
       "id": "group-my-issue-created",
       "title": {

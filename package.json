@@ -13,7 +13,7 @@
     "local-start-debug": "homey app run",
     "test:mocha": "mocha --exit -r ts-node/register",
     "test": "npm run -s test:mocha **/*.spec.ts",
-    "install-local": "homey app install",
+    "install-local": "node homey app install",
     "validate-publish": "homey app validate --level publish",
     "precm": "npm run -s build && npm run -s test",
     "cm": "npx git-cz",

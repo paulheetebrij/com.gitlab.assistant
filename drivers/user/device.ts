@@ -190,7 +190,7 @@ class GitLabUserDevice extends Homey.Device {
     await notificationData.forEach(async (args: any) => {
       try {
         const { id, project, state, type, title, link, author, body } = args;
-        this.emit('new_todo', {
+        this.driver.emit('newTodo', {
           device: this,
           id,
           project,
@@ -260,7 +260,7 @@ class GitLabUserDevice extends Homey.Device {
     this.log('GitLab user settings were changed');
     const { newSettings } = parameters;
     const { token } = newSettings as any;
-    const result: any = await this.emit('validate_user_settings', {
+    const result: any = await this.driver.emit('validate_user_settings', {
       gitlab: this.instanceUrl,
       token
     });

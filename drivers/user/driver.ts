@@ -8,7 +8,8 @@ class GitLabUserDriver extends Driver {
    */
   async onInit() {
     this.log('Driver GitLab User has been initialized');
-    this.addListener('new_todo', async (args) => {
+
+    this.addListener('newTodo', async (args) => {
       try {
         const { device, id, project, state, type, title, link, author, body } = args;
         this.log(

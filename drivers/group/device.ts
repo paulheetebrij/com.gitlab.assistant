@@ -92,33 +92,22 @@ class GitLabGroupDevice extends Device {
     await issues.forEach(async (i: IGitLabIssue) => {
       try {
         const { iid, title, created_at, web_url } = i;
+        const parameters = {
+          device: this,
+          iid,
+          title,
+          url: web_url,
+          created: created_at
+        };
         if (i.updated_at === i.created_at) {
-          this.log(`group issue ${iid} created`);
-          await this.emit('group_issue_created', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My group issue ${iid} created`);
+          await this.driver.emit('myGroupIssueCreated', parameters);
         } else if (i.closed_at) {
-          this.log(`group issue ${iid} closed`);
-          await this.emit('group_issue_closed', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My group issue ${iid} closed`);
+          await this.driver.emit('myGroupIssueClosed', parameters);
         } else {
-          this.log(`group issue ${iid} updated`);
-          await this.emit('group_issue_updated', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My group issue ${iid} updated`);
+          await this.driver.emit('myGroupIssueUpdated', parameters);
         }
       } catch (err) {
         this.error(err);
@@ -206,7 +195,7 @@ class GitLabGroupDevice extends Device {
     this.log('GitLab group settings were changed');
     const { newSettings } = parameters;
     const { token } = newSettings as any;
-    const result: any = await this.emit('validate_group_settings', {
+    const result: any = await this.driver.emit('validate_group_settings', {
       gitlab: this.instanceUrl,
       group: this.groupId,
       token

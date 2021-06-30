@@ -7,121 +7,66 @@ class GitLabProjectDriver extends Homey.Driver {
    * onInit is called when the driver is initialized.
    */
   async onInit() {
-    this.addListener('new_pipeline_status', async (args) => {
-      try {
-        const { device, id, project_id, project, ref, status, link, created_at, updated_at } = args;
-        this.log(
-          `New pipeline status ${JSON.stringify({
-            id,
-            project_id,
-            project,
-            ref,
-            status,
-            link,
-            created_at,
-            updated_at
-          })}`
-        );
-        await this.homey.flow
-          .getDeviceTriggerCard('project-pipeline-status-changed')
-          .trigger(device, {
-            ref,
-            status,
-            updated: updated_at > created_at ? updated_at : created_at,
-            url: link
-          });
-      } catch (err) {
-        this.error(err);
-      }
+    this.log('GitLab Project driver has been initialized');
+
+    const cardTriggerPipelineStatusChanged = this.homey.flow.getDeviceTriggerCard(
+      'project-pipeline-status-changed'
+    );
+    const cardTriggerNewCommit = this.homey.flow.getDeviceTriggerCard('project-new-commit');
+    const cardTriggerIssueClosed = this.homey.flow.getDeviceTriggerCard('project-my-issue-closed');
+    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('project-my-issue-created');
+    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard(
+      'project-my-issue-updated'
+    );
+
+    this.addListener('newPipelineStatus', (args) => {
+      const { device, ref, status, link, created_at, updated_at } = args;
+      return cardTriggerPipelineStatusChanged.trigger(device, {
+        ref,
+        status,
+        updated: updated_at > created_at ? updated_at : created_at,
+        url: link
+      });
     });
 
-    this.addListener('new_commit', async (args) => {
-      try {
-        const { device, id, title, message, link, created_at } = args;
-        this.log(
-          `New commit ${JSON.stringify({
-            id,
-            title,
-            message,
-            link,
-            created_at
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('project-new-commit').trigger(device, {
-          title,
-          message,
-          updated: created_at,
-          url: link
-        });
-      } catch (err) {
-        this.error(err);
-      }
+    this.addListener('newCommit', (args) => {
+      const { device, title, message, link, created_at } = args;
+      return cardTriggerNewCommit.trigger(device, {
+        title,
+        message,
+        updated: created_at,
+        url: link
+      });
     });
 
-    this.addListener('project_issue_closed', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Project issue closed ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('project-my-issue-closed').trigger(device, {
-          iid,
-          title,
-          url,
-          created
-        });
-      } catch (err) {
-        this.error(err);
-      }
+    this.addListener('myProjectIssueClosed', (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueClosed.trigger(device, {
+        iid,
+        title,
+        url,
+        created
+      });
     });
 
-    this.addListener('project_issue_created', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Project issue created ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('project-my-issue-created').trigger(device, {
-          iid,
-          title,
-          url,
-          created
-        });
-      } catch (err) {
-        this.error(err);
-      }
+    this.addListener('myProjectIssueCreated', (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueOpened.trigger(device, {
+        iid,
+        title,
+        url,
+        created
+      });
     });
 
-    this.addListener('project_issue_updated', async (args) => {
-      try {
-        const { device, iid, title, url, created } = args;
-        this.log(
-          `Project issue updated ${JSON.stringify({
-            iid,
-            title,
-            url,
-            created
-          })}`
-        );
-        await this.homey.flow.getDeviceTriggerCard('project-my-issue-updated').trigger(device, {
-          iid,
-          title,
-          url,
-          created
-        });
-      } catch (err) {
-        this.error(err);
-      }
+    this.addListener('myProjectIssueUpdated', (args) => {
+      const { device, iid, title, url, created } = args;
+      return cardTriggerIssueChanged.trigger(device, {
+        iid,
+        title,
+        url,
+        created
+      });
     });
 
     const cardActionAddProjectIssue = this.homey.flow.getActionCard('project-create-issue');
@@ -133,8 +78,6 @@ class GitLabProjectDriver extends Homey.Driver {
         this.error(err);
       }
     });
-
-    this.log('GitLab Project driver has been initialized');
   }
 
   async onPair(session: any) {

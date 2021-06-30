@@ -218,7 +218,7 @@ class GitLabProjectDevice extends Device {
     await newPipelineChanges.forEach(async (args: any) => {
       try {
         const { id, title, message, link, created_at } = args;
-        this.emit('new_commit', {
+        this.driver.emit('newCommit', {
           device: this,
           id,
           title,
@@ -233,36 +233,25 @@ class GitLabProjectDevice extends Device {
   }
 
   private async notifyIssueChanges(issues: IGitLabIssue[]): Promise<void> {
-    await issues.forEach(async (i: IGitLabIssue) => {
+    issues.forEach((i: IGitLabIssue) => {
       try {
         const { iid, title, created_at, web_url } = i;
+        const parameters = {
+          device: this,
+          iid,
+          title,
+          url: web_url,
+          created: created_at
+        };
         if (i.updated_at === i.created_at) {
-          this.log(`project issue ${iid} created`);
-          await this.emit('project_issue_created', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My project issue ${iid} created.`);
+          this.driver.emit('myProjectIssueCreated', parameters);
         } else if (i.closed_at) {
-          this.log(`project issue ${iid} closed`);
-          await this.emit('project_issue_closed', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My project issue ${iid} closed.`);
+          this.driver.emit('myProjectIssueClosed', parameters);
         } else {
-          this.log(`project issue ${iid} updated`);
-          await this.emit('project_issue_updated', {
-            device: this,
-            iid,
-            title,
-            url: web_url,
-            created: created_at
-          });
+          this.log(`My project issue ${iid} updated.`);
+          this.driver.emit('myProjectIssueUpdated', parameters);
         }
       } catch (err) {
         this.error(err);
@@ -295,7 +284,7 @@ class GitLabProjectDevice extends Device {
     await newPipelineChanges.forEach(async (args: any) => {
       try {
         const { id, project_id, ref, status, link, created_at, updated_at } = args;
-        this.emit('new_pipeline_status', {
+        this.driver.emit('newPipelineStatus', {
           device: this,
           id,
           project_id,
@@ -430,7 +419,7 @@ class GitLabProjectDevice extends Device {
     this.log('GitLab project settings were changed');
     const { newSettings } = parameters;
     const { token } = newSettings as any;
-    const result: any = await this.emit('validate_project_settings', {
+    const result: any = await this.driver.emit('validate_project_settings', {
       gitlab: this.instanceUrl,
       project: this.projectId,
       token
