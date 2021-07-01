@@ -229,11 +229,22 @@ class GitLabUserDevice extends Homey.Device {
   private async notifyNewTodo(tasks: IGitLabToDoItem[], threshold: string): Promise<void> {
     const notificationData = tasks
       .map((todoItem: IGitLabToDoItem) => {
-        const { id, project, target, target_type, author, body, state, created_at, updated_at } =
-          todoItem;
+        const {
+          id,
+          project,
+          target,
+          action_name,
+          target_type,
+          author,
+          body,
+          state,
+          created_at,
+          updated_at
+        } = todoItem;
         return {
           id,
           project: project.name,
+          action: action_name,
           type: target_type === GitLabToDoTargetType.Issue ? 'issue' : 'merge request',
           title: target.title,
           link: target.web_url,
@@ -252,11 +263,12 @@ class GitLabUserDevice extends Homey.Device {
 
     await notificationData.forEach(async (args: any) => {
       try {
-        const { id, project, state, type, title, link, author, body } = args;
+        const { id, project, action, state, type, title, link, author, body } = args;
         this.driver.emit('newTodo', {
           device: this,
           id,
           project,
+          action,
           state,
           type,
           title,

@@ -21,6 +21,54 @@
         },
         {
           "type": "string",
+          "name": "project",
+          "title": {
+            "en": "project",
+            "nl": "project"
+          },
+          "example": {
+            "en": "The ultimate database",
+            "nl": "De ultieme database"
+          }
+        },
+        {
+          "type": "string",
+          "name": "action",
+          "title": {
+            "en": "action",
+            "nl": "actie"
+          },
+          "example": {
+            "en": "mentioned",
+            "nl": "genoemd"
+          }
+        },
+        {
+          "type": "string",
+          "name": "type",
+          "title": {
+            "en": "type",
+            "nl": "soort"
+          },
+          "example": {
+            "en": "Issue",
+            "nl": "Issue"
+          }
+        },
+        {
+          "type": "string",
+          "name": "title",
+          "title": {
+            "en": "title",
+            "nl": "titel"
+          },
+          "example": {
+            "en": "Yesterday all the printers went bezerk. Can you figure out what on earth had happened.",
+            "nl": "Gisteren kregen gebruikers zaken op hun scherm die ze niet normaal vinden"
+          }
+        },
+        {
+          "type": "string",
           "name": "author",
           "title": {
             "en": "author",
@@ -41,29 +89,6 @@
           "example": {
             "en": "Please fix this bug",
             "nl": "Svp snel herstellen"
-          }
-        },
-        {
-          "type": "string",
-          "name": "type",
-          "title": {
-            "en": "type"
-          },
-          "example": {
-            "en": "Issue",
-            "nl": "Issue"
-          }
-        },
-        {
-          "type": "string",
-          "name": "title",
-          "title": {
-            "en": "title",
-            "nl": "titel"
-          },
-          "example": {
-            "en": "Yesterday all the printers went bezerk. Can you figure out what on earth had happened.",
-            "nl": "Gisteren kregen gebruikers zaken op hun scherm die ze niet normaal vinden"
           }
         },
         {

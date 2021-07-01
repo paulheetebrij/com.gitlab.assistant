@@ -11,11 +11,12 @@ class GitLabUserDriver extends Driver {
 
     this.addListener('newTodo', async (args) => {
       try {
-        const { device, id, project, state, type, title, link, author, body } = args;
+        const { device, id, project, action, state, type, title, link, author, body } = args;
         this.log(
           `New task ${JSON.stringify({
             id,
             project,
+            action,
             state,
             type,
             title,
@@ -24,9 +25,17 @@ class GitLabUserDriver extends Driver {
             body
           })}`
         );
-        await this.homey.flow
-          .getDeviceTriggerCard('user-new-todo')
-          .trigger(device, { id, project, state, type, title, link, author, body });
+        await this.homey.flow.getDeviceTriggerCard('user-new-todo').trigger(device, {
+          id,
+          project,
+          action,
+          state,
+          type,
+          title,
+          author,
+          body,
+          link
+        });
       } catch (err) {
         this.error(err);
       }
