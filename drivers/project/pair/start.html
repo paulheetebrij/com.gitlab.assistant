@@ -31,15 +31,10 @@
   const saveElement = document.getElementById("save");
 
   gitlabElement.value = "https://gitlab.com/";
-  // Homey.get("instance", function (err, instance) {
-  //   if (err) return Homey.alert(err);
-  //   gitlabElement.value = instance || "https://gitlab.com/";
-  // });
-
-  // Homey.get("key", function (err, key) {
-  //   if (err) return Homey.alert(err);
-  //   tokenElement.value = key;
-  // });
+  Homey.emit("get_defaults").then((result) => {
+    gitlabElement.value = result.instance || "https://gitlab.com/";
+    tokenElement.value = result.key;
+  });
 
   saveElement.addEventListener("click", (e) => {
     Homey.emit("validate_project_settings", {

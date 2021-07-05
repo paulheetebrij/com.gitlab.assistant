@@ -1,5 +1,5 @@
 {
   "1.0.0": {
-    "en": "First edition. Personal status, tasks, personal issues, commits and pipelines. Users, projects and groups"
+    "en": "First edition. Personal status, todo-items, personal issues, repository commits and CI/CD pipelines. Monitor users, projects and groups"
   }
 }

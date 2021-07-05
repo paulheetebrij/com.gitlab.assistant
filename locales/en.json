@@ -1,5 +1,17 @@
 {
   "gitLabError": "Error retrieving data GitLab api",
+  "assigned": "assigned",
+  "mentioned": "mentioned",
+  "build_failed": "build failed",
+  "marked": "marked",
+  "approval_required": "approval required",
+  "unmergeable": "unmergeable",
+  "directly_addressed": "directly addressed",
+  "merge_train_removed": "merge train removed",
+  "Issue": "issue",
+  "MergeRequest": "merge request",
+  "DesignManagement::Design": "design",
+  "AlertManagement::Alert": "alert",
   "settings": {
     "title": "GitLab assistant settings",
     "subtitle": "Set default values",

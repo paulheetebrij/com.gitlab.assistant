@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
-import { v4 as uuid } from 'uuid';
 
 class GitLabUserDriver extends Driver {
   /**
@@ -14,7 +13,7 @@ class GitLabUserDriver extends Driver {
       try {
         const { device, id, project, action, state, type, title, link, author, body } = args;
         this.log(
-          `New task ${JSON.stringify({
+          `New todo ${JSON.stringify({
             id,
             project,
             action,
@@ -78,6 +77,11 @@ class GitLabUserDriver extends Driver {
   }
 
   async onPair(session: any) {
+    session.setHandler('get_defaults', () => {
+      const instance = this.homey.settings.get('instance');
+      const key = this.homey.settings.get('key');
+      return { instance, key };
+    });
     session.setHandler(
       'validate_user_settings',
       async (data: {

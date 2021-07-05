@@ -2,7 +2,7 @@
   "type": "number",
   "title": {
     "en": "Open todo-items",
-    "nl": "Openstaande todo-items"
+    "nl": "Open todo-items"
   },
   "icon": "/assets/icons/task-list.svg",
   "uiComponent": "sensor",

@@ -1,7 +1,6 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { v4 as uuid } from 'uuid';
 
 class GitLabGroupDriver extends Homey.Driver {
   /**
@@ -45,6 +44,11 @@ class GitLabGroupDriver extends Homey.Driver {
   }
 
   async onPair(session: any) {
+    session.setHandler('get_defaults', () => {
+      const instance = this.homey.settings.get('instance');
+      const key = this.homey.settings.get('key');
+      return { instance, key };
+    });
     session.setHandler(
       'validate_group_settings',
       async (data: {

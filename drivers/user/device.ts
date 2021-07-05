@@ -47,7 +47,9 @@ interface IGitLabMergeRequestShort extends IGitLabTargetShort {
 interface IGitLabIssueShort extends IGitLabTargetShort {}
 enum GitLabToDoTargetType {
   Issue = 'Issue',
-  MergeRequest = 'MergeRequest'
+  MergeRequest = 'MergeRequest',
+  DesignManagementDesign = 'DesignManagement::Design',
+  AlertManagementAlert = 'AlertManagement::Alert'
 }
 interface IGitLabToDoItem {
   id: number;
@@ -249,8 +251,8 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
-  private async notifyNewTodo(tasks: IGitLabToDoItem[], threshold: string): Promise<void> {
-    const notificationData = tasks
+  private async notifyNewTodo(todos: IGitLabToDoItem[], threshold: string): Promise<void> {
+    const notificationData = todos
       .map((todoItem: IGitLabToDoItem) => {
         const {
           id,
@@ -267,8 +269,8 @@ class GitLabUserDevice extends Homey.Device {
         return {
           id,
           project: project.name,
-          action: action_name,
-          type: target_type === GitLabToDoTargetType.Issue ? 'issue' : 'merge request',
+          action: this.homey.__(action_name),
+          type: this.homey.__(target_type),
           title: target.title,
           link: target.web_url,
           author: author.name,
@@ -316,14 +318,14 @@ class GitLabUserDevice extends Homey.Device {
   }
 
   private async handleToDos(): Promise<void> {
-    const tasks = await this.getTodos();
+    const todos = await this.getTodos();
 
-    this.log(`Open tasks: ${tasks.length}`);
-    await this.setCapabilityValue('open_tasks', tasks.length).catch(this.error);
+    this.log(`Open todos: ${todos.length}`);
+    await this.setCapabilityValue('open_tasks', todos.length).catch(this.error);
 
-    if (tasks.length !== 0) {
-      const lastCreated = tasks.map((t) => t.created_at).reduce((a, c) => (a > c ? a : c));
-      const lastUpdated = tasks.map((t) => t.updated_at).reduce((a, c) => (a > c ? a : c));
+    if (todos.length !== 0) {
+      const lastCreated = todos.map((t) => t.created_at).reduce((a, c) => (a > c ? a : c));
+      const lastUpdated = todos.map((t) => t.updated_at).reduce((a, c) => (a > c ? a : c));
       const lastDate = lastCreated > lastUpdated ? lastCreated : lastUpdated;
 
       const storedLastDataTime = this.lastDataTimeTodoCheck;
@@ -332,7 +334,7 @@ class GitLabUserDevice extends Homey.Device {
       if (!!storedLastDataTime) {
         this.log(`Check todo items since ${storedLastDataTime}`);
 
-        await this.notifyNewTodo(tasks, storedLastDataTime);
+        await this.notifyNewTodo(todos, storedLastDataTime);
       }
 
       this.lastDataTimeTodoCheck = lastDate;

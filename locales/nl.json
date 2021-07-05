@@ -1,5 +1,17 @@
 {
   "gitLabError": "Fout bij ophalen gegevens GitLab api",
+  "assigned": "toegekend",
+  "mentioned": "genoemd",
+  "build_failed": "build mislukt",
+  "marked": "gemarkeerd",
+  "approval_required": "toestemming vereist",
+  "unmergeable": "merge conflict",
+  "directly_addressed": "direct aangesproken",
+  "merge_train_removed": "merge request verwijderd",
+  "Issue": "issue",
+  "MergeRequest": "merge request",
+  "DesignManagement::Design": "ontwerp",
+  "AlertManagement::Alert": "alarm",
   "settings": {
     "title": "Configuratie GitLab assistent",
     "subtitle": "Vul standaard waarden in",

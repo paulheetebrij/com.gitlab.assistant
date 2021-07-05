@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { v4 as uuid } from 'uuid';
+
 class GitLabProjectDriver extends Homey.Driver {
   /**
    * onInit is called when the driver is initialized.
@@ -81,6 +81,11 @@ class GitLabProjectDriver extends Homey.Driver {
   }
 
   async onPair(session: any) {
+    session.setHandler('get_defaults', () => {
+      const instance = this.homey.settings.get('instance');
+      const key = this.homey.settings.get('key');
+      return { instance, key };
+    });
     session.setHandler(
       'validate_project_settings',
       async (data: {
