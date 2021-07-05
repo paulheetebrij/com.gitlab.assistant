@@ -1,5 +1,8 @@
 {
   "1.0.0": {
     "en": "First edition. Personal status, todo-items, personal issues, repository commits and CI/CD pipelines. Monitor users, projects and groups"
+  },
+  "1.1.0": {
+    "en": "App settings default Gitlab instance en access key"
   }
 }
