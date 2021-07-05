@@ -25,8 +25,8 @@ class GitLabGroupDevice extends Device {
     return this.getStoreValue('instanceUrl');
   }
 
-  private get groupId(): string {
-    return this.getData().id;
+  private get groupId(): number {
+    return this.getStoreValue('group');
   }
 
   private get myApiUrl(): string {
@@ -59,6 +59,9 @@ class GitLabGroupDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -86,9 +89,9 @@ class GitLabGroupDevice extends Device {
       return await response.json();
     } catch (err) {
       if (err.status === 401) {
-        await this.setUnavailable();
+        await this.setUnavailable(response.statusText);
       } else if (err.status === 404) {
-        await this.setUnavailable();
+        await this.setUnavailable(response.statusText);
       }
       this.log(`Url: ${url}, Response: ${JSON.stringify(response)}`);
       this.error(err);

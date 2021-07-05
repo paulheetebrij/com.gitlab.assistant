@@ -6,12 +6,12 @@
   "sdk": 3,
   "brandColor": "#534886",
   "name": {
-    "en": "GitLab assistant",
-    "nl": "GitLab assistant"
+    "en": "GitLab",
+    "nl": "GitLab"
   },
   "description": {
-    "en": "Accelerate modern DevOps. Automate monitoring for common changes like issue status and new todo items",
-    "nl": "Accelerate modern DevOps. Automatiseer monitoring van issue wijzigingen en nieuwe todo items"
+    "en": "Accelerate modern DevOps.",
+    "nl": "Accelerate modern DevOps."
   },
   "category": [
     "tools"
@@ -38,8 +38,8 @@
       {
         "id": "group-my-issue-created",
         "title": {
-          "en": "New issue by me",
-          "nl": "Nieuw issue van mij"
+          "en": "I have created a new issue",
+          "nl": "ik heb een nieuw issue ingebracht"
         },
         "tokens": [
           {
@@ -102,8 +102,8 @@
       {
         "id": "group-my-issue-updated",
         "title": {
-          "en": "My issue is updated",
-          "nl": "Mijn Issue is bijgewerkt"
+          "en": "an issue I have contributed is updated",
+          "nl": "een issue dat ik heb ingebracht is bijgewerkt"
         },
         "tokens": [
           {
@@ -166,8 +166,8 @@
       {
         "id": "group-my-issue-closed",
         "title": {
-          "en": "My issue is closed",
-          "nl": "Mijn issue is gesloten"
+          "en": "an issue I have contributed is closed",
+          "nl": "een issue dat ik heb ingebracht is gesloten"
         },
         "tokens": [
           {
@@ -230,8 +230,8 @@
       {
         "id": "project-pipeline-status-changed",
         "title": {
-          "en": "Pipeline status changed",
-          "nl": "Statuswijziging pipeline"
+          "en": "the status of the CI/CD pipeline is changed",
+          "nl": "de status van de CI/CD pipeline is gewijzigd"
         },
         "tokens": [
           {
@@ -286,8 +286,8 @@
       {
         "id": "project-new-commit",
         "title": {
-          "en": "New commit",
-          "nl": "Nieuwe commit"
+          "en": "there is a new repository commit",
+          "nl": "er een nieuwe repository commit is gedaan"
         },
         "tokens": [
           {
@@ -350,8 +350,8 @@
       {
         "id": "project-my-issue-created",
         "title": {
-          "en": "New issue by me",
-          "nl": "Nieuw issue van mij"
+          "en": "I have created a new issue",
+          "nl": "ik heb een nieuw issue ingebracht"
         },
         "tokens": [
           {
@@ -414,8 +414,8 @@
       {
         "id": "project-my-issue-updated",
         "title": {
-          "en": "My issue is updated",
-          "nl": "Mijn Issue is bijgewerkt"
+          "en": "an issue I have contributed is updated",
+          "nl": "een issue dat ik heb ingebracht is bijgewerkt"
         },
         "tokens": [
           {
@@ -478,8 +478,8 @@
       {
         "id": "project-my-issue-closed",
         "title": {
-          "en": "My issue is closed",
-          "nl": "Mijn issue is gesloten"
+          "en": "an issue I have contributed is closed",
+          "nl": "een issue dat ik heb ingebracht is gesloten"
         },
         "tokens": [
           {
@@ -542,8 +542,8 @@
       {
         "id": "user-new-todo",
         "title": {
-          "en": "New activity",
-          "nl": "Nieuwe activiteit"
+          "en": "there is a new todo",
+          "nl": "er is een nieuwe todo"
         },
         "tokens": [
           {
@@ -656,12 +656,12 @@
       {
         "id": "group-create-issue",
         "title": {
-          "en": "Create group issue",
-          "nl": "Maak groeps-issue aan"
+          "en": "create issue",
+          "nl": "maak issue aan"
         },
         "titleFormatted": {
-          "en": "Add group issue: [[title]]",
-          "nl": "Maak groeps-issue aan: [[title]]"
+          "en": "create an issue: [[title]]",
+          "nl": "maak een issue aan: [[title]]"
         },
         "args": [
           {
@@ -682,12 +682,12 @@
       {
         "id": "project-create-issue",
         "title": {
-          "en": "Create project issue",
-          "nl": "Maak project-issue aan"
+          "en": "Create a issue",
+          "nl": "Maak een issue aan"
         },
         "titleFormatted": {
-          "en": "Add project issue: [[title]]",
-          "nl": "Maak project-issue aan: [[title]]"
+          "en": "create an issue: [[title]]",
+          "nl": "maak een issue aan: [[title]]"
         },
         "args": [
           {
@@ -708,12 +708,12 @@
       {
         "id": "user-mark-done",
         "title": {
-          "en": "Mark todo as done",
-          "nl": "Markeer activiteit als gereed"
+          "en": "mark todo as done",
+          "nl": "markeer todo als gereed"
         },
         "titleFormatted": {
-          "en": "Mark todo #[[id]] as done",
-          "nl": "Markeer activiteit #[[id]] als gereed"
+          "en": "mark todo #[[id]] as done",
+          "nl": "markeer todo #[[id]] als gereed"
         },
         "args": [
           {
@@ -736,8 +736,8 @@
       {
         "id": "user-mark-all-done",
         "title": {
-          "en": "Mark all todos as done",
-          "nl": "Markeer alle activiteiten als gereed"
+          "en": "mark all todos as done",
+          "nl": "markeer alle todo's als gereed"
         },
         "args": [
           {
@@ -750,12 +750,12 @@
       {
         "id": "user-set-status",
         "title": {
-          "en": "Set status",
-          "nl": "Pas status aan"
+          "en": "set personal status",
+          "nl": "pas peroonlijke status aan"
         },
         "titleFormatted": {
-          "en": "Set status to [[message]]. [[clear]] clear status",
-          "nl": "Zet status naar[[message]]. Verwijder status [[clear]]"
+          "en": "set personal status to [[message]]. [[clear]] clear status",
+          "nl": "pas persoonlijke status aan naar [[message]]. Verwijder status [[clear]]"
         },
         "args": [
           {
@@ -1015,8 +1015,8 @@
     "open_tasks": {
       "type": "number",
       "title": {
-        "en": "Open tasks",
-        "nl": "Openstaande taken"
+        "en": "Open todo-items",
+        "nl": "Openstaande todo-items"
       },
       "icon": "/assets/icons/task-list.svg",
       "uiComponent": "sensor",

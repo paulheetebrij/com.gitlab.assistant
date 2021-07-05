@@ -1,8 +1,12 @@
 {
   "gitLabError": "Error retrieving data GitLab api",
   "settings": {
-    "title": "GitLab Settings Page",
-    "subtitle": "Please configure api"
+    "title": "GitLab assistant settings",
+    "subtitle": "Set default values",
+    "legend": "Default instance and key",
+    "instance": "GitLab instance",
+    "key": "Access token",
+    "submit": "Save changes"
   },
   "project": {
     "pair": {

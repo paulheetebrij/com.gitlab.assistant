@@ -9,7 +9,7 @@
 
   <div class="field row">
     <label for="gitlab" data-i18n="project.pair.instance"></label>
-    <input type="text" id="gitlab" name="gitlab" value="https://gitlab.com/"><br>
+    <input type="text" id="gitlab" name="gitlab" value=""><br>
   </div>
   <div class="field row">
     <label for="project" data-i18n="project.pair.project"></label>
@@ -29,18 +29,30 @@
   const projectElement = document.getElementById("project");
   const tokenElement = document.getElementById("token");
   const saveElement = document.getElementById("save");
+
+  gitlabElement.value = "https://gitlab.com/";
+  // Homey.get("instance", function (err, instance) {
+  //   if (err) return Homey.alert(err);
+  //   gitlabElement.value = instance || "https://gitlab.com/";
+  // });
+
+  // Homey.get("key", function (err, key) {
+  //   if (err) return Homey.alert(err);
+  //   tokenElement.value = key;
+  // });
+
   saveElement.addEventListener("click", (e) => {
     Homey.emit("validate_project_settings", {
       gitlab: gitlabElement.value,
       project: projectElement.value,
       token: tokenElement.value,
     }).then((result) => {
-      const { credentialsAreValid, name } = result;
+      const { credentialsAreValid, name, id } = result;
       if (credentialsAreValid) {
         Homey.createDevice({
           name,
           data: {
-            id: projectElement.value,
+            id,
           },
           store: {
             instanceUrl: gitlabElement.value,
@@ -50,16 +62,14 @@
             token: tokenElement.value,
             checkInterval: 3
           }
-        })
-          .then((result) => {
-            Homey.done();
-          })
-          .catch((error) => {
-            Homey.alert(err);
-          });
+        }).then((result) => {
+          Homey.done();
+        }).catch((error) => {
+          Homey.alert(error);
+        });
       } else {
         Homey.alert(Homey.__('project.pair.noAccess'));
       }
-    });
+    }).catch(this.error);
   });
 </script>

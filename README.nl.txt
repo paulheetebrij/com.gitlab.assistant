@@ -1,1 +1,2 @@
-Accelerate modern DevOps. Automatiseer het bewaken van standaard events, zoals todo-taakjes, gewijzigde issues en nieuwe builds en commits. Zodat jij gefocusd kunt blijven op je werk. 
+Automatiseer het bewaken van standaard gebeurtenissen, zoals todo-items, issue wijzigingen, CI/CD pipeline runs en sourcecode commits.
+Zodat jij je kunt blijven focussen op je werk. 

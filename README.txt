@@ -1,1 +1,2 @@
-Accelerate modern DevOps. Automate the monitoring of basic events, like new requests, issue status changes new builds and commits. So you can stay focused.
+Automate the monitoring of basic events like new todo-items, issue status changes, CI/CD pipeline runs and sourcecode commits.
+So you can keep your focus.

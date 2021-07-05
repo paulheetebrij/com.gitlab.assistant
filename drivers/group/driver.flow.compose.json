@@ -3,12 +3,12 @@
     {
       "id": "group-create-issue",
       "title": {
-        "en": "Create group issue",
-        "nl": "Maak groeps-issue aan"
+        "en": "create issue",
+        "nl": "maak issue aan"
       },
       "titleFormatted": {
-        "en": "Add group issue: [[title]]",
-        "nl": "Maak groeps-issue aan: [[title]]"
+        "en": "create an issue: [[title]]",
+        "nl": "maak een issue aan: [[title]]"
       },
       "args": [
         {
@@ -26,8 +26,8 @@
     {
       "id": "group-my-issue-created",
       "title": {
-        "en": "New issue by me",
-        "nl": "Nieuw issue van mij"
+        "en": "I have created a new issue",
+        "nl": "ik heb een nieuw issue ingebracht"
       },
       "tokens": [
         {
@@ -83,8 +83,8 @@
     {
       "id": "group-my-issue-updated",
       "title": {
-        "en": "My issue is updated",
-        "nl": "Mijn Issue is bijgewerkt"
+        "en": "an issue I have contributed is updated",
+        "nl": "een issue dat ik heb ingebracht is bijgewerkt"
       },
       "tokens": [
         {
@@ -140,8 +140,8 @@
     {
       "id": "group-my-issue-closed",
       "title": {
-        "en": "My issue is closed",
-        "nl": "Mijn issue is gesloten"
+        "en": "an issue I have contributed is closed",
+        "nl": "een issue dat ik heb ingebracht is gesloten"
       },
       "tokens": [
         {

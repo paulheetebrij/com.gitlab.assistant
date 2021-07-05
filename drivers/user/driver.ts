@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
+import { v4 as uuid } from 'uuid';
 
 class GitLabUserDriver extends Driver {
   /**
@@ -82,16 +83,27 @@ class GitLabUserDriver extends Driver {
       async (data: {
         gitlab: string;
         token: string;
-      }): Promise<{ credentialsAreValid: boolean; id?: number; name?: string }> => {
-        const { gitlab, token } = data;
-        let headers: any = { Authorization: `Bearer ${token}` };
-        const response = await fetch(`${gitlab}/api/v4/user`, { headers });
-        if (!response.ok) {
-          this.log(`Response not ok: ${JSON.stringify(response)}`);
-          return { credentialsAreValid: false };
+      }): Promise<{
+        credentialsAreValid: boolean;
+        userId?: number;
+        name?: string;
+        id?: string;
+      }> => {
+        try {
+          const { gitlab, token } = data;
+          let headers: any = { Authorization: `Bearer ${token}` };
+          const response = await fetch(`${gitlab}/api/v4/user`, { headers });
+          if (!response.ok) {
+            this.log(`Response not ok: ${JSON.stringify(response)}`);
+            return { credentialsAreValid: false };
+          }
+          const { id: userId, name } = await response.json();
+          const id = `${userId}`;
+          return { credentialsAreValid: true, id, userId, name };
+        } catch (err) {
+          this.error(err);
+          throw err;
         }
-        const { id, name } = await response.json();
-        return { credentialsAreValid: true, id, name };
       }
     );
   }

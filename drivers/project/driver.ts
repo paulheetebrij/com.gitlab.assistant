@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-
+import { v4 as uuid } from 'uuid';
 class GitLabProjectDriver extends Homey.Driver {
   /**
    * onInit is called when the driver is initialized.
@@ -87,16 +87,22 @@ class GitLabProjectDriver extends Homey.Driver {
         gitlab: string;
         project: string;
         token: string;
-      }): Promise<{ credentialsAreValid: boolean; name?: string }> => {
-        const { gitlab, project, token } = data;
-        let headers: any = { Authorization: `Bearer ${token}` };
-        const response = await fetch(`${gitlab}/api/v4/projects/${project}`, { headers });
-        if (!response.ok) {
-          this.log(`Response not ok: ${JSON.stringify(response)}`);
-          return { credentialsAreValid: false };
+      }): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
+        try {
+          const { gitlab, project, token } = data;
+          let headers: any = { Authorization: `Bearer ${token}` };
+          const response = await fetch(`${gitlab}/api/v4/projects/${project}`, { headers });
+          if (!response.ok) {
+            this.log(`Response not ok: ${JSON.stringify(response)}`);
+            return { credentialsAreValid: false };
+          }
+          const currentProject: any = await response.json();
+          const id = `${project}`;
+          return { credentialsAreValid: true, name: currentProject.name, id };
+        } catch (error) {
+          this.error(error);
+          throw error;
         }
-        const currentProject: any = await response.json();
-        return { credentialsAreValid: true, name: currentProject.name };
       }
     );
   }

@@ -1,8 +1,8 @@
 {
   "type": "number",
   "title": {
-    "en": "Open tasks",
-    "nl": "Openstaande taken"
+    "en": "Open todo-items",
+    "nl": "Openstaande todo-items"
   },
   "icon": "/assets/icons/task-list.svg",
   "uiComponent": "sensor",

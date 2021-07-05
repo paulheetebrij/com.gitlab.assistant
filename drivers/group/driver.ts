@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
+import { v4 as uuid } from 'uuid';
 
 class GitLabGroupDriver extends Homey.Driver {
   /**
@@ -50,16 +51,22 @@ class GitLabGroupDriver extends Homey.Driver {
         gitlab: string;
         group: string;
         token: string;
-      }): Promise<{ credentialsAreValid: boolean; name?: string }> => {
-        const { gitlab, group, token } = data;
-        let headers: any = { Authorization: `Bearer ${token}` };
-        const response = await fetch(`${gitlab}/api/v4/groups/${group}`, { headers });
-        if (!response.ok) {
-          this.log(`Response not ok: ${JSON.stringify(response)}`);
-          return { credentialsAreValid: false };
+      }): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
+        try {
+          const { gitlab, group, token } = data;
+          let headers: any = { Authorization: `Bearer ${token}` };
+          const response = await fetch(`${gitlab}/api/v4/groups/${group}`, { headers });
+          if (!response.ok) {
+            this.log(`Response not ok: ${JSON.stringify(response)}`);
+            return { credentialsAreValid: false };
+          }
+          const currentGroup: any = await response.json();
+          const id = `${group}`;
+          return { credentialsAreValid: true, name: currentGroup.name, id };
+        } catch (err) {
+          this.error(err);
+          throw err;
         }
-        const currentGroup: any = await response.json();
-        return { credentialsAreValid: true, name: currentGroup.name };
       }
     );
 

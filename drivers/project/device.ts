@@ -38,8 +38,8 @@ class GitLabProjectDevice extends Device {
     return this.getStoreValue('instanceUrl');
   }
 
-  private get projectId(): string {
-    return this.getData().id;
+  private get projectId(): number {
+    return this.getStoreValue('project');
   }
 
   private get myApiUrl(): string {
@@ -95,6 +95,9 @@ class GitLabProjectDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -116,6 +119,9 @@ class GitLabProjectDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -139,6 +145,9 @@ class GitLabProjectDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -163,6 +172,9 @@ class GitLabProjectDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -188,6 +200,9 @@ class GitLabProjectDevice extends Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();

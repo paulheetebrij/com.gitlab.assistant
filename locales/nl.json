@@ -1,8 +1,12 @@
 {
   "gitLabError": "Fout bij ophalen gegevens GitLab api",
   "settings": {
-    "title": "GitLab Configuratie Pagina",
-    "subtitle": "Vul api key in"
+    "title": "Configuratie GitLab assistent",
+    "subtitle": "Vul standaard waarden in",
+    "legend": "Standaard installatie en key",
+    "instance": "GitLab installatie",
+    "key": "Access token",
+    "submit": "Bijwerken"
   },
   "project": {
     "pair": {

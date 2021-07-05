@@ -23,7 +23,8 @@
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
     "source-map-support": "^0.5.19",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.10"
   },
   "devDependencies": {
     "@tsconfig/node12": "^1.0.9",
@@ -35,6 +36,8 @@
     "@types/node-fetch": "^2.5.10",
     "@types/sinon": "^10.0.2",
     "@types/source-map-support": "^0.5.3",
+    "@types/uuid": "^8.3.1",
+    "@types/uuidv4": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "chai": "^4.3.4",

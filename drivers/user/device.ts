@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Homey from 'homey';
-import fetch from 'node-fetch';
+import fetch, { Response } from 'node-fetch';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
 
 enum ClearStatusAfter {
@@ -101,7 +101,7 @@ class GitLabUserDevice extends Homey.Device {
   }
 
   private get id(): number {
-    return this.getData().id;
+    return this.getStoreValue('id');
   }
 
   private get lastDataTimeTodoCheck(): string {
@@ -116,6 +116,7 @@ class GitLabUserDevice extends Homey.Device {
     message?: string;
     clear_status_after?: ClearStatusAfter;
   }): Promise<void> {
+    let response: Response;
     try {
       const { emoji, message, clear_status_after } = status;
       let headers: any = {
@@ -126,12 +127,17 @@ class GitLabUserDevice extends Homey.Device {
       if (emoji) body.emoji = emoji;
       if (message) body.message = message;
       if (clear_status_after) body.clear_status_after = clear_status_after;
-      const response = await fetch(`${this.myApiUrl}status`, {
+      response = await fetch(`${this.myApiUrl}status`, {
         method: 'PUT',
         headers,
         body: JSON.stringify(body)
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
     } catch (err) {
@@ -151,6 +157,11 @@ class GitLabUserDevice extends Homey.Device {
         headers
       });
       if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
     } catch (err) {
@@ -162,12 +173,17 @@ class GitLabUserDevice extends Homey.Device {
   }
 
   private async getMyIssues(): Promise<IGitLabIssue[]> {
-    let response: any; // eslint-disable-line;
+    let response: Response; // eslint-disable-line;
     const url = `${this.myApiUrl}issues/?assignee_id=${this.id}&state=opened`;
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
       response = await fetch(url, { headers });
       if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -176,14 +192,13 @@ class GitLabUserDevice extends Homey.Device {
         await this.setUnavailable();
       }
       this.log(`Error retrieving url: ${url}`);
-      this.log(`Response: ${JSON.stringify(response)}`);
       this.error(err);
       throw err;
     }
   }
 
   private async getMyIssueStatistics(): Promise<IGitLabIssueStatistics> {
-    let response: any; // eslint-disable-line;
+    let response: Response; // eslint-disable-line;
     //GET /issues_statistics?author_id=5
     //GET / issues_statistics ? assignee_id = 5
     const url = `${this.myApiUrl}issues_statistics/?assignee_id=${this.id}&state=opened`;
@@ -191,6 +206,11 @@ class GitLabUserDevice extends Homey.Device {
       let headers: any = { Authorization: `Bearer ${this.token}` };
       response = await fetch(url, { headers });
       if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -199,19 +219,23 @@ class GitLabUserDevice extends Homey.Device {
         await this.setUnavailable();
       }
       this.log(`Error retrieving url: ${url}`);
-      this.log(`Response: ${JSON.stringify(response)}`);
       this.error(err);
       throw err;
     }
   }
 
   private async getTodos(): Promise<IGitLabToDoItem[]> {
-    let response: any; // eslint-disable-line;
+    let response: Response; // eslint-disable-line;
     const url = `${this.myApiUrl}todos?state=pending`;
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
       response = await fetch(url, { headers });
       if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
         throw new Error(this.homey.__('gitLabError'));
       }
       return await response.json();
@@ -220,7 +244,6 @@ class GitLabUserDevice extends Homey.Device {
         await this.setUnavailable();
       }
       this.log(`Error retrieving url: ${url}`);
-      this.log(`Response: ${JSON.stringify(response)}`);
       this.error(err);
       throw err;
     }

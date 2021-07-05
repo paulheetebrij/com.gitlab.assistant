@@ -5,12 +5,12 @@
   "sdk": 3,
   "brandColor": "#534886",
   "name": {
-    "en": "GitLab assistant",
-    "nl": "GitLab assistant"
+    "en": "GitLab",
+    "nl": "GitLab"
   },
   "description": {
-    "en": "Accelerate modern DevOps. Automate monitoring for common changes like issue status and new todo items",
-    "nl": "Accelerate modern DevOps. Automatiseer monitoring van issue wijzigingen en nieuwe todo items"
+    "en": "Accelerate modern DevOps.",
+    "nl": "Accelerate modern DevOps."
   },
   "category": [
     "tools"

@@ -3,12 +3,12 @@
     {
       "id": "project-create-issue",
       "title": {
-        "en": "Create project issue",
-        "nl": "Maak project-issue aan"
+        "en": "Create a issue",
+        "nl": "Maak een issue aan"
       },
       "titleFormatted": {
-        "en": "Add project issue: [[title]]",
-        "nl": "Maak project-issue aan: [[title]]"
+        "en": "create an issue: [[title]]",
+        "nl": "maak een issue aan: [[title]]"
       },
       "args": [
         {
@@ -26,8 +26,8 @@
     {
       "id": "project-pipeline-status-changed",
       "title": {
-        "en": "Pipeline status changed",
-        "nl": "Statuswijziging pipeline"
+        "en": "the status of the CI/CD pipeline is changed",
+        "nl": "de status van de CI/CD pipeline is gewijzigd"
       },
       "tokens": [
         {
@@ -75,8 +75,8 @@
     {
       "id": "project-new-commit",
       "title": {
-        "en": "New commit",
-        "nl": "Nieuwe commit"
+        "en": "there is a new repository commit",
+        "nl": "er een nieuwe repository commit is gedaan"
       },
       "tokens": [
         {
@@ -132,8 +132,8 @@
     {
       "id": "project-my-issue-created",
       "title": {
-        "en": "New issue by me",
-        "nl": "Nieuw issue van mij"
+        "en": "I have created a new issue",
+        "nl": "ik heb een nieuw issue ingebracht"
       },
       "tokens": [
         {
@@ -189,8 +189,8 @@
     {
       "id": "project-my-issue-updated",
       "title": {
-        "en": "My issue is updated",
-        "nl": "Mijn Issue is bijgewerkt"
+        "en": "an issue I have contributed is updated",
+        "nl": "een issue dat ik heb ingebracht is bijgewerkt"
       },
       "tokens": [
         {
@@ -246,8 +246,8 @@
     {
       "id": "project-my-issue-closed",
       "title": {
-        "en": "My issue is closed",
-        "nl": "Mijn issue is gesloten"
+        "en": "an issue I have contributed is closed",
+        "nl": "een issue dat ik heb ingebracht is gesloten"
       },
       "tokens": [
         {
