@@ -18,6 +18,16 @@ class GitLabGroupDevice extends Device {
       await this.handleIssueStatistics().catch(this.error);
     });
 
+    if (this.hasCapability('paused') === false) {
+      // You need to check if migration is needed
+      // do not call addCapability on every init!
+      await this.addCapability('paused');
+    }
+    this.registerCapabilityListener('paused', async (args) => {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+      this.log(`paused: ${JSON.stringify(args)}`);
+    });
+
     await this.poller();
   }
 
@@ -127,7 +137,7 @@ class GitLabGroupDevice extends Device {
   }
 
   private async poller(): Promise<void> {
-    if (this.getAvailable()) {
+    if (this.getCapabilityValue('paused') === false) {
       this.emit(pollerEvent);
     }
 
@@ -159,6 +169,14 @@ class GitLabGroupDevice extends Device {
     const issueStatistics = await this.getIssueStatistics();
     const { opened } = issueStatistics.statistics.counts;
     await this.setCapabilityValue('open_issues', opened).catch(this.error);
+  }
+
+  public async enablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', false).catch(this.error);
+  }
+
+  public async disablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
   public async addIssue(title: string): Promise<void> {
@@ -204,6 +222,7 @@ class GitLabGroupDevice extends Device {
   }): Promise<string | void> {
     this.log('GitLab group settings were changed');
     const { newSettings } = parameters;
+    this.log(JSON.stringify(newSettings));
     const { token } = newSettings as any;
     const result: any = await this.driver.emit('validate_group_settings', {
       gitlab: this.instanceUrl,

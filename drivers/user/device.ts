@@ -76,6 +76,15 @@ class GitLabUserDevice extends Homey.Device {
       // do not call addCapability on every init!
       await this.addCapability('open_issues');
     }
+    if (this.hasCapability('paused') === false) {
+      // You need to check if migration is needed
+      // do not call addCapability on every init!
+      await this.addCapability('paused');
+    }
+    this.registerCapabilityListener('paused', async (args) => {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+      this.log(`paused: ${JSON.stringify(args)}`);
+    });
 
     this.addListener(pollerEvent, async () => {
       await this.handleToDos().catch(this.error);
@@ -150,6 +159,14 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
+  public async enablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', false).catch(this.error);
+  }
+
+  public async disablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', true).catch(this.error);
+  }
+
   public async markTodosAsDone(id?: number): Promise<void> {
     const idBranch = id ? `/${id}` : '';
     try {
@@ -171,31 +188,6 @@ class GitLabUserDevice extends Homey.Device {
         await this.setUnavailable();
       }
       this.error(err);
-    }
-  }
-
-  private async getMyIssues(): Promise<IGitLabIssue[]> {
-    let response: Response; // eslint-disable-line;
-    const url = `${this.myApiUrl}issues/?assignee_id=${this.id}&state=opened`;
-    try {
-      let headers: any = { Authorization: `Bearer ${this.token}` };
-      response = await fetch(url, { headers });
-      if (!response.ok) {
-        if (response.status === 401) {
-          // const errMessage = await response.json();
-          // response.statusText
-          await this.setUnavailable(response.statusText);
-        }
-        throw new Error(this.homey.__('gitLabError'));
-      }
-      return await response.json();
-    } catch (err) {
-      if (err.status === 401) {
-        await this.setUnavailable();
-      }
-      this.log(`Error retrieving url: ${url}`);
-      this.error(err);
-      throw err;
     }
   }
 
@@ -308,10 +300,10 @@ class GitLabUserDevice extends Homey.Device {
   }
 
   private async poller(): Promise<void> {
-    if (this.getAvailable()) {
+    if (this.getCapabilityValue('paused') === false) {
       this.emit(pollerEvent);
     } else {
-      this.log(`User unavailable`);
+      this.log(`User paused`);
     }
 
     setTimeout(() => this.poller().catch(this.error), this.checkInterval);
@@ -373,6 +365,7 @@ class GitLabUserDevice extends Homey.Device {
   }): Promise<string | void> {
     this.log('GitLab user settings were changed');
     const { newSettings } = parameters;
+    this.log(JSON.stringify(newSettings));
     const { token } = newSettings as any;
     const result: any = await this.driver.emit('validate_user_settings', {
       gitlab: this.instanceUrl,

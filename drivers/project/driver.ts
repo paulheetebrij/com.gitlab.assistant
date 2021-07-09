@@ -78,6 +78,26 @@ class GitLabProjectDriver extends Homey.Driver {
         this.error(err);
       }
     });
+
+    const cardActionEnableProjectPoller = this.homey.flow.getActionCard('enable-project-poller');
+    cardActionEnableProjectPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.enablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
+    const cardActionDisableProjectPoller = this.homey.flow.getActionCard('disable-project-poller');
+    cardActionDisableProjectPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.disablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
   }
 
   async onPair(session: any) {

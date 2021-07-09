@@ -74,6 +74,26 @@ class GitLabUserDriver extends Driver {
         this.error(err);
       }
     });
+
+    const cardActionEnableUserPoller = this.homey.flow.getActionCard('enable-user-poller');
+    cardActionEnableUserPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.enablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
+    const cardActionDisableUserPoller = this.homey.flow.getActionCard('disable-user-poller');
+    cardActionDisableUserPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.disablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
   }
 
   async onPair(session: any) {

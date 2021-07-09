@@ -1,0 +1,12 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Paused",
+    "nl": "Uitgeschakeld"
+  },
+  "icon": "/assets/icons/pause.svg",
+  "uiComponent": "toggle",
+  "getable": true,
+  "setable": true,
+  "insights": false
+}

@@ -138,6 +138,20 @@
       }
     },
     {
+      "id": "enable-user-poller",
+      "title": {
+        "en": "enable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen aan"
+      }
+    },
+    {
+      "id": "disable-user-poller",
+      "title": {
+        "en": "disable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen uit"
+      }
+    },
+    {
       "id": "user-set-status",
       "title": {
         "en": "set personal status",

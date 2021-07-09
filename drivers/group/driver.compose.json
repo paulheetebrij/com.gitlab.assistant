@@ -9,7 +9,8 @@
     "large": "/drivers/group/assets/images/large.png"
   },
   "capabilities": [
-    "open_issues"
+    "open_issues",
+    "paused"
   ],
   "pair": [
     {

@@ -654,6 +654,34 @@
     ],
     "actions": [
       {
+        "id": "enable-group-poller",
+        "title": {
+          "en": "enable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen aan"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          }
+        ]
+      },
+      {
+        "id": "disable-group-poller",
+        "title": {
+          "en": "disable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen uit"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          }
+        ]
+      },
+      {
         "id": "group-create-issue",
         "title": {
           "en": "create issue",
@@ -676,6 +704,34 @@
               "en": "title",
               "nl": "titel"
             }
+          }
+        ]
+      },
+      {
+        "id": "enable-project-poller",
+        "title": {
+          "en": "enable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen aan"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
+          }
+        ]
+      },
+      {
+        "id": "disable-project-poller",
+        "title": {
+          "en": "disable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen uit"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=project"
           }
         ]
       },
@@ -738,6 +794,34 @@
         "title": {
           "en": "mark all todos as done",
           "nl": "markeer alle todo's als gereed"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          }
+        ]
+      },
+      {
+        "id": "enable-user-poller",
+        "title": {
+          "en": "enable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen aan"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          }
+        ]
+      },
+      {
+        "id": "disable-user-poller",
+        "title": {
+          "en": "disable polling for events",
+          "nl": "schakel het monitoren van gebeurtenissen uit"
         },
         "args": [
           {
@@ -849,7 +933,8 @@
         "large": "/drivers/group/assets/images/large.png"
       },
       "capabilities": [
-        "open_issues"
+        "open_issues",
+        "paused"
       ],
       "pair": [
         {
@@ -895,7 +980,8 @@
       "capabilities": [
         "open_issues",
         "last_build",
-        "last_commit"
+        "last_commit",
+        "paused"
       ],
       "pair": [
         {
@@ -940,7 +1026,8 @@
       },
       "capabilities": [
         "open_issues",
-        "open_tasks"
+        "open_tasks",
+        "paused"
       ],
       "pair": [
         {
@@ -1023,6 +1110,18 @@
       "getable": true,
       "setable": true,
       "insights": true
+    },
+    "paused": {
+      "type": "boolean",
+      "title": {
+        "en": "Paused",
+        "nl": "Uitgeschakeld"
+      },
+      "icon": "/assets/icons/pause.svg",
+      "uiComponent": "toggle",
+      "getable": true,
+      "setable": true,
+      "insights": false
     }
   }
 }

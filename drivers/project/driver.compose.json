@@ -10,7 +10,8 @@
   "capabilities": [
     "open_issues",
     "last_build",
-    "last_commit"
+    "last_commit",
+    "paused"
   ],
   "pair": [
     {

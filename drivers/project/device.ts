@@ -31,6 +31,16 @@ class GitLabProjectDevice extends Device {
       await this.handleIssueStatistics().catch(this.error);
     });
 
+    if (this.hasCapability('paused') === false) {
+      // You need to check if migration is needed
+      // do not call addCapability on every init!
+      await this.addCapability('paused');
+    }
+    this.registerCapabilityListener('paused', async (args) => {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+      this.log(`paused: ${JSON.stringify(args)}`);
+    });
+
     await this.poller();
   }
 
@@ -82,6 +92,14 @@ class GitLabProjectDevice extends Device {
 
   private set lastDateTimeIssueCheck(value: string) {
     this.setStoreValue('lastDateTimeIssueCheck', value);
+  }
+
+  public async enablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', false).catch(this.error);
+  }
+
+  public async disablePoller(): Promise<void> {
+    await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
   public async addIssue(title: string): Promise<void> {
@@ -331,7 +349,7 @@ class GitLabProjectDevice extends Device {
   }
 
   private async poller(): Promise<void> {
-    if (this.getAvailable()) {
+    if (this.getCapabilityValue('paused') === false) {
       this.emit(pollerEvent);
     }
 
@@ -444,6 +462,7 @@ class GitLabProjectDevice extends Device {
   }): Promise<string | void> {
     this.log('GitLab project settings were changed');
     const { newSettings } = parameters;
+    this.log(JSON.stringify(newSettings));
     const { token } = newSettings as any;
     const result: any = await this.driver.emit('validate_project_settings', {
       gitlab: this.instanceUrl,

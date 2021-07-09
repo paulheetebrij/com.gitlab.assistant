@@ -83,6 +83,26 @@ class GitLabGroupDriver extends Homey.Driver {
         this.error(err);
       }
     });
+
+    const cardActionEnableGroupPoller = this.homey.flow.getActionCard('enable-group-poller');
+    cardActionEnableGroupPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.enablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
+    const cardActionDisableGroupPoller = this.homey.flow.getActionCard('disable-group-poller');
+    cardActionDisableGroupPoller.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        await device.disablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
   }
 }
 

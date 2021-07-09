@@ -1,6 +1,20 @@
 {
   "actions": [
     {
+      "id": "enable-group-poller",
+      "title": {
+        "en": "enable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen aan"
+      }
+    },
+    {
+      "id": "disable-group-poller",
+      "title": {
+        "en": "disable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen uit"
+      }
+    },
+    {
       "id": "group-create-issue",
       "title": {
         "en": "create issue",

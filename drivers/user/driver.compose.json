@@ -9,7 +9,8 @@
   },
   "capabilities": [
     "open_issues",
-    "open_tasks"
+    "open_tasks",
+    "paused"
   ],
   "pair": [
     {

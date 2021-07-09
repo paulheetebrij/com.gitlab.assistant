@@ -1,6 +1,20 @@
 {
   "actions": [
     {
+      "id": "enable-project-poller",
+      "title": {
+        "en": "enable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen aan"
+      }
+    },
+    {
+      "id": "disable-project-poller",
+      "title": {
+        "en": "disable polling for events",
+        "nl": "schakel het monitoren van gebeurtenissen uit"
+      }
+    },
+    {
       "id": "project-create-issue",
       "title": {
         "en": "Create a issue",
