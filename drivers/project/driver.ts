@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
+import { ProjectConnection } from './interfaces';
 
 class GitLabProjectDriver extends Homey.Driver {
   /**
@@ -100,36 +101,34 @@ class GitLabProjectDriver extends Homey.Driver {
     });
   }
 
+  public async connect(
+    data: ProjectConnection
+  ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> {
+    try {
+      this.log(`validate_project_settings: ${JSON.stringify(data)}`);
+      const { gitlab, project, token } = data;
+      let headers: any = { Authorization: `Bearer ${token}` };
+      const response = await fetch(`${gitlab}/api/v4/projects/${project}`, { headers });
+      if (!response.ok) {
+        this.log(`Response not ok: ${JSON.stringify(response)}`);
+        return { credentialsAreValid: false };
+      }
+      const currentProject: any = await response.json();
+      const id = `${project}`;
+      return { credentialsAreValid: true, name: currentProject.name, id };
+    } catch (error) {
+      this.error(error);
+      throw error;
+    }
+  }
+
   async onPair(session: any) {
     session.setHandler('get_defaults', () => {
       const instance = this.homey.settings.get('instance');
       const key = this.homey.settings.get('key');
       return { instance, key };
     });
-    session.setHandler(
-      'validate_project_settings',
-      async (data: {
-        gitlab: string;
-        project: string;
-        token: string;
-      }): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
-        try {
-          const { gitlab, project, token } = data;
-          let headers: any = { Authorization: `Bearer ${token}` };
-          const response = await fetch(`${gitlab}/api/v4/projects/${project}`, { headers });
-          if (!response.ok) {
-            this.log(`Response not ok: ${JSON.stringify(response)}`);
-            return { credentialsAreValid: false };
-          }
-          const currentProject: any = await response.json();
-          const id = `${project}`;
-          return { credentialsAreValid: true, name: currentProject.name, id };
-        } catch (error) {
-          this.error(error);
-          throw error;
-        }
-      }
-    );
+    session.setHandler('validate_project_settings', async (args: any) => await this.connect(args));
   }
 }
 

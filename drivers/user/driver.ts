@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
+import { UserConnection } from './interfaces';
 
 class GitLabUserDriver extends Driver {
   /**
@@ -104,10 +105,9 @@ class GitLabUserDriver extends Driver {
     });
     session.setHandler(
       'validate_user_settings',
-      async (data: {
-        gitlab: string;
-        token: string;
-      }): Promise<{
+      async (
+        data: UserConnection
+      ): Promise<{
         credentialsAreValid: boolean;
         userId?: number;
         name?: string;

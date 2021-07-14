@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
+import { GroupConnection } from './interfaces';
 
 class GitLabGroupDriver extends Homey.Driver {
   /**
@@ -51,11 +52,9 @@ class GitLabGroupDriver extends Homey.Driver {
     });
     session.setHandler(
       'validate_group_settings',
-      async (data: {
-        gitlab: string;
-        group: string;
-        token: string;
-      }): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
+      async (
+        data: GroupConnection
+      ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
         try {
           const { gitlab, group, token } = data;
           let headers: any = { Authorization: `Bearer ${token}` };
@@ -68,6 +67,7 @@ class GitLabGroupDriver extends Homey.Driver {
           const id = `${group}`;
           return { credentialsAreValid: true, name: currentGroup.name, id };
         } catch (err) {
+          this.log(JSON.stringify(err));
           this.error(err);
           throw err;
         }

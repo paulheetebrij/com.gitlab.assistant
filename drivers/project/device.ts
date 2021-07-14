@@ -8,6 +8,7 @@ import {
   IGitLabIssueStatistics,
   IGitLabPipeline
 } from '../../gitlabLib/interfaces';
+import { ProjectConnection } from './interfaces';
 
 const pollerEvent = 'nextPoll';
 class GitLabProjectDevice extends Device {
@@ -458,29 +459,34 @@ class GitLabProjectDevice extends Device {
   async onSettings(parameters: {
     oldSettings: {};
     newSettings: {};
-    changedKeys: {};
+    changedKeys: string[];
   }): Promise<string | void> {
-    this.log('GitLab project settings were changed');
-    const { newSettings } = parameters;
-    this.log(JSON.stringify(newSettings));
-    const { token } = newSettings as any;
-    const result: any = await this.driver.emit('validate_project_settings', {
-      gitlab: this.instanceUrl,
-      project: this.projectId,
-      token
-    });
-    const { credentialsAreValid } = result;
-    if (!credentialsAreValid) {
-      if (this.getAvailable()) {
-        await this.setUnavailable();
+    const { oldSettings, newSettings, changedKeys } = parameters;
+    this.log(`These GitLab project settings were changed: ${JSON.stringify(changedKeys)}`);
+    try {
+      if (changedKeys.includes('token')) {
+        const { token } = newSettings as any;
+        const connection: ProjectConnection = {
+          gitlab: this.instanceUrl,
+          project: this.projectId,
+          token
+        };
+        const myDriver: any = this.driver;
+        const { credentialsAreValid } = await myDriver.connect(connection);
+        if (!credentialsAreValid) {
+          if (this.getAvailable()) {
+            await this.setUnavailable();
+          }
+          return this.homey.__('project.pair.noAccess');
+        } else {
+          if (!this.getAvailable()) {
+            await this.setAvailable();
+          }
+        }
       }
-      return this.homey.__('project.pair.noAccess');
-    } else {
-      if (!this.getAvailable()) {
-        await this.setAvailable();
-      }
+    } catch (err) {
+      this.error(err);
     }
-    return;
   }
 
   /**

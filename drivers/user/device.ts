@@ -2,6 +2,7 @@
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
+import { UserConnection } from './interfaces';
 
 enum ClearStatusAfter {
   ClearAfter30Minutes = '30_minutes',
@@ -367,10 +368,11 @@ class GitLabUserDevice extends Homey.Device {
     const { newSettings } = parameters;
     this.log(JSON.stringify(newSettings));
     const { token } = newSettings as any;
-    const result: any = await this.driver.emit('validate_user_settings', {
+    const connection: UserConnection = {
       gitlab: this.instanceUrl,
       token
-    });
+    };
+    const result: any = await this.driver.emit('validate_user_settings', connection);
     const { credentialsAreValid } = result;
     if (!credentialsAreValid) {
       if (this.getAvailable()) {

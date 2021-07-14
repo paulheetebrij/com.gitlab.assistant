@@ -3,6 +3,7 @@ import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
+import { GroupConnection } from './interfaces';
 
 const pollerEvent = 'nextPoll';
 class GitLabGroupDevice extends Device {
@@ -224,11 +225,13 @@ class GitLabGroupDevice extends Device {
     const { newSettings } = parameters;
     this.log(JSON.stringify(newSettings));
     const { token } = newSettings as any;
-    const result: any = await this.driver.emit('validate_group_settings', {
+    const connection: GroupConnection = {
       gitlab: this.instanceUrl,
       group: this.groupId,
       token
-    });
+    };
+
+    const result: any = await this.driver.emit('validate_group_settings', connection);
     const { credentialsAreValid } = result;
     if (!credentialsAreValid) {
       if (this.getAvailable()) {
