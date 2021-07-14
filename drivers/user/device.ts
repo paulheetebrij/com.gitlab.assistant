@@ -2,7 +2,7 @@
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
-import { UserConnection } from './interfaces';
+import { UserConnection, UserConnector } from './interfaces';
 
 enum ClearStatusAfter {
   ClearAfter30Minutes = '30_minutes',
@@ -362,29 +362,33 @@ class GitLabUserDevice extends Homey.Device {
   async onSettings(parameters: {
     oldSettings: {};
     newSettings: {};
-    changedKeys: {};
+    changedKeys: string[];
   }): Promise<string | void> {
-    this.log('GitLab user settings were changed');
-    const { newSettings } = parameters;
-    this.log(JSON.stringify(newSettings));
-    const { token } = newSettings as any;
-    const connection: UserConnection = {
-      gitlab: this.instanceUrl,
-      token
-    };
-    const result: any = await this.driver.emit('validate_user_settings', connection);
-    const { credentialsAreValid } = result;
-    if (!credentialsAreValid) {
-      if (this.getAvailable()) {
-        await this.setUnavailable();
+    const { oldSettings, newSettings, changedKeys } = parameters;
+    this.log(`These GitLab user settings were changed: ${JSON.stringify(changedKeys)}`);
+    try {
+      if (changedKeys.includes('token')) {
+        const { token } = newSettings as any;
+        const connection: UserConnection = {
+          gitlab: this.instanceUrl,
+          token
+        };
+        const myDriver: UserConnector = this.driver as any;
+        const { credentialsAreValid } = await myDriver.connect(connection);
+        if (!credentialsAreValid) {
+          if (this.getAvailable()) {
+            await this.setUnavailable();
+          }
+          return this.homey.__('user.pair.noAccess');
+        } else {
+          if (!this.getAvailable()) {
+            await this.setAvailable();
+          }
+        }
       }
-      return this.homey.__('user.pair.noAccess');
-    } else {
-      if (!this.getAvailable()) {
-        await this.setAvailable();
-      }
+    } catch (err) {
+      this.error(err);
     }
-    return;
   }
 
   /**

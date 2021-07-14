@@ -1,9 +1,9 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { ProjectConnection } from './interfaces';
+import { ProjectConnection, ProjectConnector } from './interfaces';
 
-class GitLabProjectDriver extends Homey.Driver {
+class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
   /**
    * onInit is called when the driver is initialized.
    */

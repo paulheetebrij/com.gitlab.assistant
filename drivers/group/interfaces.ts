@@ -4,3 +4,9 @@ export interface GroupConnection {
   token: string;
   group: number;
 }
+
+export interface GroupConnector {
+  connect(
+    data: GroupConnection
+  ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }>;
+}

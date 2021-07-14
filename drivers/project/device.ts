@@ -8,7 +8,7 @@ import {
   IGitLabIssueStatistics,
   IGitLabPipeline
 } from '../../gitlabLib/interfaces';
-import { ProjectConnection } from './interfaces';
+import { ProjectConnection, ProjectConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
 class GitLabProjectDevice extends Device {
@@ -471,7 +471,7 @@ class GitLabProjectDevice extends Device {
           project: this.projectId,
           token
         };
-        const myDriver: any = this.driver;
+        const myDriver: ProjectConnector = this.driver as any;
         const { credentialsAreValid } = await myDriver.connect(connection);
         if (!credentialsAreValid) {
           if (this.getAvailable()) {

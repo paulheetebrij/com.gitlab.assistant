@@ -1,9 +1,9 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { GroupConnection } from './interfaces';
+import { GroupConnection, GroupConnector } from './interfaces';
 
-class GitLabGroupDriver extends Homey.Driver {
+class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
   /**
    * onInit is called when the driver is initialized.
    */
@@ -44,34 +44,35 @@ class GitLabGroupDriver extends Homey.Driver {
     });
   }
 
+  public async connect(
+    data: GroupConnection
+  ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> {
+    try {
+      const { gitlab, group, token } = data;
+      let headers: any = { Authorization: `Bearer ${token}` };
+      const response = await fetch(`${gitlab}/api/v4/groups/${group}`, { headers });
+      if (!response.ok) {
+        this.log(`Response not ok: ${JSON.stringify(response)}`);
+        return { credentialsAreValid: false };
+      }
+      const currentGroup: any = await response.json();
+      const id = `${group}`;
+      return { credentialsAreValid: true, name: currentGroup.name, id };
+    } catch (err) {
+      this.log(JSON.stringify(err));
+      this.error(err);
+      throw err;
+    }
+  }
+
   async onPair(session: any) {
     session.setHandler('get_defaults', () => {
       const instance = this.homey.settings.get('instance');
       const key = this.homey.settings.get('key');
       return { instance, key };
     });
-    session.setHandler(
-      'validate_group_settings',
-      async (
-        data: GroupConnection
-      ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> => {
-        try {
-          const { gitlab, group, token } = data;
-          let headers: any = { Authorization: `Bearer ${token}` };
-          const response = await fetch(`${gitlab}/api/v4/groups/${group}`, { headers });
-          if (!response.ok) {
-            this.log(`Response not ok: ${JSON.stringify(response)}`);
-            return { credentialsAreValid: false };
-          }
-          const currentGroup: any = await response.json();
-          const id = `${group}`;
-          return { credentialsAreValid: true, name: currentGroup.name, id };
-        } catch (err) {
-          this.log(JSON.stringify(err));
-          this.error(err);
-          throw err;
-        }
-      }
+    session.setHandler('validate_group_settings', async (data: GroupConnection) =>
+      this.connect(data)
     );
 
     const cardActionAddGroupIssue = this.homey.flow.getActionCard('group-create-issue');

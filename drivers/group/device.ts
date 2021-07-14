@@ -3,7 +3,7 @@ import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
-import { GroupConnection } from './interfaces';
+import { GroupConnection, GroupConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
 class GitLabGroupDevice extends Device {
@@ -219,31 +219,34 @@ class GitLabGroupDevice extends Device {
   async onSettings(parameters: {
     oldSettings: {};
     newSettings: {};
-    changedKeys: {};
+    changedKeys: string[];
   }): Promise<string | void> {
-    this.log('GitLab group settings were changed');
-    const { newSettings } = parameters;
-    this.log(JSON.stringify(newSettings));
-    const { token } = newSettings as any;
-    const connection: GroupConnection = {
-      gitlab: this.instanceUrl,
-      group: this.groupId,
-      token
-    };
-
-    const result: any = await this.driver.emit('validate_group_settings', connection);
-    const { credentialsAreValid } = result;
-    if (!credentialsAreValid) {
-      if (this.getAvailable()) {
-        await this.setUnavailable();
+    const { oldSettings, newSettings, changedKeys } = parameters;
+    this.log(`These GitLab group settings were changed: ${JSON.stringify(changedKeys)}`);
+    try {
+      if (changedKeys.includes('token')) {
+        const { token } = newSettings as any;
+        const connection: GroupConnection = {
+          gitlab: this.instanceUrl,
+          group: this.groupId,
+          token
+        };
+        const myDriver: GroupConnector = this.driver as any;
+        const { credentialsAreValid } = await myDriver.connect(connection);
+        if (!credentialsAreValid) {
+          if (this.getAvailable()) {
+            await this.setUnavailable();
+          }
+          return this.homey.__('user.pair.noAccess');
+        } else {
+          if (!this.getAvailable()) {
+            await this.setAvailable();
+          }
+        }
       }
-      return this.homey.__('group.pair.noAccess');
-    } else {
-      if (!this.getAvailable()) {
-        await this.setAvailable();
-      }
+    } catch (err) {
+      this.error(err);
     }
-    return;
   }
 
   /**

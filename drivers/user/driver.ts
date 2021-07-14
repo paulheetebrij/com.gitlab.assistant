@@ -1,9 +1,9 @@
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
-import { UserConnection } from './interfaces';
+import { UserConnection, UserConnector } from './interfaces';
 
-class GitLabUserDriver extends Driver {
+class GitLabUserDriver extends Driver implements UserConnector {
   /**
    * onInit is called when the driver is initialized.
    */
@@ -97,38 +97,37 @@ class GitLabUserDriver extends Driver {
     });
   }
 
+  public async connect(data: UserConnection): Promise<{
+    credentialsAreValid: boolean;
+    userId?: number;
+    name?: string;
+    id?: string;
+  }> {
+    try {
+      const { gitlab, token } = data;
+      let headers: any = { Authorization: `Bearer ${token}` };
+      const response = await fetch(`${gitlab}/api/v4/user`, { headers });
+      if (!response.ok) {
+        this.log(`Response not ok: ${JSON.stringify(response)}`);
+        return { credentialsAreValid: false };
+      }
+      const { id: userId, name } = await response.json();
+      const id = `${userId}`;
+      return { credentialsAreValid: true, id, userId, name };
+    } catch (err) {
+      this.error(err);
+      throw err;
+    }
+  }
+
   async onPair(session: any) {
     session.setHandler('get_defaults', () => {
       const instance = this.homey.settings.get('instance');
       const key = this.homey.settings.get('key');
       return { instance, key };
     });
-    session.setHandler(
-      'validate_user_settings',
-      async (
-        data: UserConnection
-      ): Promise<{
-        credentialsAreValid: boolean;
-        userId?: number;
-        name?: string;
-        id?: string;
-      }> => {
-        try {
-          const { gitlab, token } = data;
-          let headers: any = { Authorization: `Bearer ${token}` };
-          const response = await fetch(`${gitlab}/api/v4/user`, { headers });
-          if (!response.ok) {
-            this.log(`Response not ok: ${JSON.stringify(response)}`);
-            return { credentialsAreValid: false };
-          }
-          const { id: userId, name } = await response.json();
-          const id = `${userId}`;
-          return { credentialsAreValid: true, id, userId, name };
-        } catch (err) {
-          this.error(err);
-          throw err;
-        }
-      }
+    session.setHandler('validate_user_settings', async (data: UserConnection) =>
+      this.connect(data)
     );
   }
 }

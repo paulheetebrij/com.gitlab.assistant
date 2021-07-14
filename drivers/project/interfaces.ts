@@ -4,3 +4,9 @@ export interface ProjectConnection {
   token: string;
   project: number;
 }
+
+export interface ProjectConnector {
+  connect(
+    data: ProjectConnection
+  ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }>;
+}
