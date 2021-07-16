@@ -196,16 +196,16 @@ export interface MergeRequestToDoTarget extends ToDoTargetCore {
  * @interface
  * @extends ToDoTargetCore
  */
-export interface IssueToDoTarget extends ToDoTargetCore {}
+export interface IssueToDoTarget extends ToDoTargetCore { }
 
 /**
  * @interface
  * @property {number} id
- * @property {IGitLabProjectShort} project
- * @property {IGitLabUserShort} author
+ * @property {ProjectCore} project
+ * @property {UserCore} author
  * @property {string} action_name
- * @property {GitLabToDoTargetType} target_type
- * @property {IGitLabIssueShort | IGitLabMergeRequestShort} target
+ * @property {ToDoTargetType} target_type
+ * @property {IssueToDoTarget | MergeRequestToDoTarget} target
  * @property {string} body
  * @property {string} state
  * @property {string} created_at
@@ -229,7 +229,7 @@ export interface ToDoItem {
  * @property {number} id
  * @property {number} project_id
  * @property {string} sha
- * @property {string} ref
+ * @property {string} ref Branch
  * @property {string} status
  * @property {string} created_at
  * @property {string} updated_at
@@ -239,7 +239,7 @@ export interface CiCdPipeline {
   id: number;
   project_id: number;
   sha: string;
-  ref: string; // = branch
+  ref: string;
   status: string;
   created_at: string;
   updated_at: string;
