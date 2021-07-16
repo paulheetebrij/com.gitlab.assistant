@@ -196,7 +196,7 @@ export interface MergeRequestToDoTarget extends ToDoTargetCore {
  * @interface
  * @extends ToDoTargetCore
  */
-export interface IssueToDoTarget extends ToDoTargetCore { }
+export interface IssueToDoTarget extends ToDoTargetCore {}
 
 /**
  * @interface
