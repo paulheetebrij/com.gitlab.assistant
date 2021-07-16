@@ -1,11 +1,7 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
-import {
-  ClearStatusAfter,
-  IGitLabIssueStatistics,
-  IGitLabToDoItem
-} from '../../gitlabLib/interfaces';
+import { ClearStatusAfter, IssueStatistics, ToDoItem } from '../../gitlabLib/interfaces';
 import { UserConnectRequest, UserConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
@@ -141,7 +137,7 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
-  private async getMyIssueStatistics(): Promise<IGitLabIssueStatistics> {
+  private async getMyIssueStatistics(): Promise<IssueStatistics> {
     let response: Response; // eslint-disable-line;
     //GET /issues_statistics?author_id=5
     //GET / issues_statistics ? assignee_id = 5
@@ -168,7 +164,7 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
-  private async getTodos(): Promise<IGitLabToDoItem[]> {
+  private async getTodos(): Promise<ToDoItem[]> {
     let response: Response; // eslint-disable-line;
     const url = `${this.myApiUrl}todos?state=pending`;
     try {
@@ -193,9 +189,9 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
-  private async notifyNewTodo(todos: IGitLabToDoItem[], threshold: string): Promise<void> {
+  private async notifyNewTodo(todos: ToDoItem[], threshold: string): Promise<void> {
     const notificationData = todos
-      .map((todoItem: IGitLabToDoItem) => {
+      .map((todoItem: ToDoItem) => {
         const {
           id,
           project,

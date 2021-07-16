@@ -11,7 +11,7 @@ export enum ClearStatusAfter {
 }
 
 /** @enum {string} */
-export enum GitLabToDoTargetType {
+export enum ToDoTargetType {
   Issue = 'Issue',
   MergeRequest = 'MergeRequest',
   DesignManagementDesign = 'DesignManagement::Design',
@@ -25,7 +25,7 @@ export enum GitLabToDoTargetType {
  * @property {string} name
  * @property {string} web_url
  */
-export interface IGitLabGroup {
+export interface Group {
   id: string;
   description: string;
   name: string;
@@ -52,7 +52,7 @@ export interface IGitLabGroup {
  * @property {string} default_branch
  * @property {string} web_url
  */
-export interface IGitLabProject {
+export interface Project {
   id: string;
   description: string;
   name: string;
@@ -87,7 +87,7 @@ export interface IGitLabProject {
  * @property {string} issue_type
  * @property {string} web_url
  */
-export interface IGitLabIssue {
+export interface Issue {
   id: number;
   iid: number;
   project_id: number;
@@ -110,7 +110,7 @@ export interface IGitLabIssue {
  * @property {number} statistics.counts.closed
  * @property {number} statistics.counts.opened
  */
-export interface IGitLabIssueStatistics {
+export interface IssueStatistics {
   statistics: {
     counts: {
       all: number;
@@ -130,7 +130,7 @@ export interface IGitLabIssueStatistics {
  * @property {string} path_with_namespace
  * @property {string} created_at
  */
-export interface IGitLabProjectShort {
+export interface ProjectCore {
   id: number;
   description: string;
   name: string;
@@ -149,7 +149,7 @@ export interface IGitLabProjectShort {
  * @property {string} avatar_url
  * @property {string} web_url
  */
-export interface IGitLabUserShort {
+export interface UserCore {
   id: number;
   name: string;
   username: string;
@@ -169,7 +169,7 @@ export interface IGitLabUserShort {
  * @property {string} updated_at
  * @property {string} web_url
  */
-export interface IGitLabTargetShort {
+export interface ToDoTargetCore {
   id: number;
   iid: number;
   project_id: number;
@@ -183,20 +183,20 @@ export interface IGitLabTargetShort {
 
 /**
  * @interface
- * @extends IGitLabTargetShort
+ * @extends ToDoTargetCore
  * @property {string} target_branch
  * @property {string} source_branch
  */
-export interface IGitLabMergeRequestShort extends IGitLabTargetShort {
+export interface MergeRequestToDoTarget extends ToDoTargetCore {
   target_branch: string;
   source_branch: string;
 }
 
 /**
  * @interface
- * @extends IGitLabTargetShort
+ * @extends ToDoTargetCore
  */
-export interface IGitLabIssueShort extends IGitLabTargetShort {}
+export interface IssueToDoTarget extends ToDoTargetCore { }
 
 /**
  * @interface
@@ -211,13 +211,13 @@ export interface IGitLabIssueShort extends IGitLabTargetShort {}
  * @property {string} created_at
  * @property {string} updated_at
  */
-export interface IGitLabToDoItem {
+export interface ToDoItem {
   id: number;
-  project: IGitLabProjectShort;
-  author: IGitLabUserShort;
+  project: ProjectCore;
+  author: UserCore;
   action_name: string;
-  target_type: GitLabToDoTargetType;
-  target: IGitLabIssueShort | IGitLabMergeRequestShort;
+  target_type: ToDoTargetType;
+  target: IssueToDoTarget | MergeRequestToDoTarget;
   body: string;
   state: string;
   created_at: string;
@@ -235,7 +235,7 @@ export interface IGitLabToDoItem {
  * @property {string} updated_at
  * @property {string} web_url
  */
-export interface IGitLabPipeline {
+export interface CiCdPipeline {
   id: number;
   project_id: number;
   sha: string;
@@ -269,7 +269,7 @@ export interface IGitLabPipeline {
  * @property {string} updated_at
  * @property {string} web_url
  */
-export interface IGitLabCommit {
+export interface Commit {
   id: string;
   short_id: string;
   created_at: string;

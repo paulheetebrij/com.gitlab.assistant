@@ -2,12 +2,7 @@
 import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
-import {
-  IGitLabCommit,
-  IGitLabIssue,
-  IGitLabIssueStatistics,
-  IGitLabPipeline
-} from '../../gitlabLib/interfaces';
+import { Commit, Issue, IssueStatistics, CiCdPipeline } from '../../gitlabLib/interfaces';
 import { ProjectConnectRequest, ProjectConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
@@ -144,7 +139,7 @@ class GitLabProjectDevice extends Device {
     }
   }
 
-  private async getPipelines(): Promise<IGitLabPipeline[]> {
+  private async getPipelines(): Promise<CiCdPipeline[]> {
     let response: any; // eslint-disable-line;
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
@@ -170,7 +165,7 @@ class GitLabProjectDevice extends Device {
     }
   }
 
-  private async getCommits(): Promise<IGitLabCommit[]> {
+  private async getCommits(): Promise<Commit[]> {
     let response: any; // eslint-disable-line;
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
@@ -196,7 +191,7 @@ class GitLabProjectDevice extends Device {
     }
   }
 
-  private async getIssueStatistics(): Promise<IGitLabIssueStatistics> {
+  private async getIssueStatistics(): Promise<IssueStatistics> {
     const url = `${this.myApiUrl}issues_statistics`;
     let response: any; // eslint-disable-line;
     try {
@@ -223,7 +218,7 @@ class GitLabProjectDevice extends Device {
     }
   }
 
-  private async getIssues(updated_after?: string): Promise<IGitLabIssue[]> {
+  private async getIssues(updated_after?: string): Promise<Issue[]> {
     this.log(`get issues updated after: ${updated_after}`);
     const url = `${this.myApiUrl}issues${updated_after ? `?updated_after=${updated_after}` : ''}`;
     let response: any; // eslint-disable-line;
@@ -249,9 +244,9 @@ class GitLabProjectDevice extends Device {
     }
   }
 
-  private async notifyNewCommits(commits: IGitLabCommit[], threshold: string): Promise<void> {
+  private async notifyNewCommits(commits: Commit[], threshold: string): Promise<void> {
     const newPipelineChanges = commits
-      .map((commit: IGitLabCommit) => {
+      .map((commit: Commit) => {
         const {
           id,
           title,
@@ -294,8 +289,8 @@ class GitLabProjectDevice extends Device {
     });
   }
 
-  private async notifyIssueChanges(issues: IGitLabIssue[]): Promise<void> {
-    issues.forEach((i: IGitLabIssue) => {
+  private async notifyIssueChanges(issues: Issue[]): Promise<void> {
+    issues.forEach((i: Issue) => {
       try {
         const { iid, title, created_at, web_url } = i;
         const parameters = {
@@ -322,11 +317,11 @@ class GitLabProjectDevice extends Device {
   }
 
   private async notifyNewPipelineChanges(
-    pipelines: IGitLabPipeline[],
+    pipelines: CiCdPipeline[],
     threshold: string
   ): Promise<void> {
     const newPipelineChanges = pipelines
-      .map((pipeline: IGitLabPipeline) => {
+      .map((pipeline: CiCdPipeline) => {
         const { id, project_id, ref, status, web_url, created_at, updated_at } = pipeline;
         return {
           id,

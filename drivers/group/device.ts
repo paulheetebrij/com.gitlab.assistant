@@ -2,7 +2,7 @@
 import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
-import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
+import { Issue, IssueStatistics } from '../../gitlabLib/interfaces';
 import { GroupConnectRequest, GroupConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
@@ -73,7 +73,7 @@ class GitLabGroupDevice extends Device {
   }
 
   /** @private */
-  private async getIssues(updated_after: string): Promise<IGitLabIssue[]> {
+  private async getIssues(updated_after: string): Promise<Issue[]> {
     this.log(`get issues updated after: ${updated_after}`);
     const url = `${this.myApiUrl}issues${updated_after ? `?updated_after=${updated_after}` : ''}`;
     let response: any; // eslint-disable-line;
@@ -100,7 +100,7 @@ class GitLabGroupDevice extends Device {
   }
 
   /** @private */
-  private async getIssueStatistics(): Promise<IGitLabIssueStatistics> {
+  private async getIssueStatistics(): Promise<IssueStatistics> {
     const url = `${this.myApiUrl}issues_statistics`;
     let response: any; // eslint-disable-line;
     try {
@@ -125,8 +125,8 @@ class GitLabGroupDevice extends Device {
   }
 
   /** @private */
-  private async notifyIssueChanges(issues: IGitLabIssue[]): Promise<void> {
-    await issues.forEach(async (i: IGitLabIssue) => {
+  private async notifyIssueChanges(issues: Issue[]): Promise<void> {
+    await issues.forEach(async (i: Issue) => {
       try {
         const { iid, title, created_at, web_url } = i;
         const parameters = {
