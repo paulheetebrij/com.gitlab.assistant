@@ -36,6 +36,64 @@
   "flow": {
     "triggers": [
       {
+        "title": {
+          "en": "a CI/CD pipeline fails"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "project",
+            "title": {
+              "en": "Project"
+            },
+            "example": {
+              "en": "ConsoleApp"
+            }
+          },
+          {
+            "type": "number",
+            "name": "projectid",
+            "title": {
+              "en": "Project ID"
+            },
+            "example": {
+              "en": "1936752"
+            }
+          },
+          {
+            "type": "string",
+            "name": "ref",
+            "title": {
+              "en": "ref"
+            },
+            "example": {
+              "en": "master"
+            }
+          },
+          {
+            "type": "string",
+            "name": "updated",
+            "title": {
+              "en": "Updated"
+            },
+            "example": {
+              "en": "2021-06-26T05:39:32.471Z"
+            }
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "title": {
+              "en": "url"
+            },
+            "example": {
+              "en": "https://gitlab.com/USER/PROJECT/-/pipelines/327558556"
+            }
+          }
+        ],
+        "id": "a-cicd-pipeline-fails"
+      },
+      {
         "id": "group-my-issue-created",
         "title": {
           "en": "I have created a new issue",

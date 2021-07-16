@@ -8,9 +8,14 @@ import {
   IGitLabIssueStatistics,
   IGitLabPipeline
 } from '../../gitlabLib/interfaces';
-import { ProjectConnection, ProjectConnector } from './interfaces';
+import { ProjectConnectRequest, ProjectConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
+/**
+ * @class
+ * @extends Device
+ */
+// @ts-check
 class GitLabProjectDevice extends Device {
   /**
    * onInit is called when the device is initialized.
@@ -95,14 +100,23 @@ class GitLabProjectDevice extends Device {
     this.setStoreValue('lastDateTimeIssueCheck', value);
   }
 
+  /**
+   * Enable polling for new changes
+   */
   public async enablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', false).catch(this.error);
   }
 
+  /**
+   * Disable polling for new changes
+   */
   public async disablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
+  /**
+   * @param {string} title
+   */
   public async addIssue(title: string): Promise<void> {
     let response: any; // eslint-disable-line;
     try {
@@ -343,6 +357,17 @@ class GitLabProjectDevice extends Device {
           created_at,
           updated_at
         });
+        if (status === 'failed') {
+          this.homey.app.emit('pipeline-fails', {
+            id,
+            project_id,
+            project: this.getName(),
+            ref,
+            link,
+            created_at,
+            updated_at
+          });
+        }
       } catch (err) {
         this.error(err);
       }
@@ -466,7 +491,7 @@ class GitLabProjectDevice extends Device {
     try {
       if (changedKeys.includes('token')) {
         const { token } = newSettings as any;
-        const connection: ProjectConnection = {
+        const connection: ProjectConnectRequest = {
           gitlab: this.instanceUrl,
           project: this.projectId,
           token

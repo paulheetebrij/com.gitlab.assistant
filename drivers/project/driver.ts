@@ -1,8 +1,13 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch from 'node-fetch';
-import { ProjectConnection, ProjectConnector } from './interfaces';
+import { ProjectConnectRequest, ProjectConnectResponse, ProjectConnector } from './interfaces';
 
+/**
+ * @class
+ * @extends Homey.Driver
+ * @implements {ProjectConnector}
+ */
 class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
   /**
    * onInit is called when the driver is initialized.
@@ -101,9 +106,12 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
     });
   }
 
-  public async connect(
-    data: ProjectConnection
-  ): Promise<{ credentialsAreValid: boolean; name?: string; id?: string }> {
+  /**
+   * Tests credentials and validity of project settings by api call.
+   * @param {ProjectConnectRequest} data
+   * @returns {ProjectConnectResponse}
+   */
+  public async connect(data: ProjectConnectRequest): Promise<ProjectConnectResponse> {
     try {
       this.log(`validate_project_settings: ${JSON.stringify(data)}`);
       const { gitlab, project, token } = data;

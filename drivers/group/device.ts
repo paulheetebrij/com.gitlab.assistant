@@ -3,9 +3,14 @@ import { Device } from 'homey';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
-import { GroupConnection, GroupConnector } from './interfaces';
+import { GroupConnectRequest, GroupConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
+/**
+ * @class
+ * @extends Device
+ */
+// @ts-check
 class GitLabGroupDevice extends Device {
   /**
    * onInit is called when the device is initialized.
@@ -32,34 +37,42 @@ class GitLabGroupDevice extends Device {
     await this.poller();
   }
 
+  /** @private */
   private get instanceUrl(): string {
     return this.getStoreValue('instanceUrl');
   }
 
+  /** @private */
   private get groupId(): number {
     return this.getStoreValue('group');
   }
 
+  /** @private */
   private get myApiUrl(): string {
     return `${this.instanceUrl}api/v4/groups/${this.groupId}/`;
   }
 
+  /** @private */
   private get token(): string {
     return this.getSetting('token');
   }
 
+  /** @private */
   private get checkInterval(): number {
     return (this.getSetting('checkInterval') || 3) * 60000;
   }
 
+  /** @private */
   private get lastDateTimeIssueCheck(): string {
     return this.getStoreValue('lastDateTimeIssueCheck');
   }
 
+  /** @private */
   private set lastDateTimeIssueCheck(value: string) {
     this.setStoreValue('lastDateTimeIssueCheck', value);
   }
 
+  /** @private */
   private async getIssues(updated_after: string): Promise<IGitLabIssue[]> {
     this.log(`get issues updated after: ${updated_after}`);
     const url = `${this.myApiUrl}issues${updated_after ? `?updated_after=${updated_after}` : ''}`;
@@ -86,6 +99,7 @@ class GitLabGroupDevice extends Device {
     }
   }
 
+  /** @private */
   private async getIssueStatistics(): Promise<IGitLabIssueStatistics> {
     const url = `${this.myApiUrl}issues_statistics`;
     let response: any; // eslint-disable-line;
@@ -110,6 +124,7 @@ class GitLabGroupDevice extends Device {
     }
   }
 
+  /** @private */
   private async notifyIssueChanges(issues: IGitLabIssue[]): Promise<void> {
     await issues.forEach(async (i: IGitLabIssue) => {
       try {
@@ -137,6 +152,7 @@ class GitLabGroupDevice extends Device {
     });
   }
 
+  /** @private */
   private async poller(): Promise<void> {
     if (this.getCapabilityValue('paused') === false) {
       this.emit(pollerEvent);
@@ -145,6 +161,7 @@ class GitLabGroupDevice extends Device {
     setTimeout(() => this.poller().catch(this.error), this.checkInterval);
   }
 
+  /** @private */
   private async handleIssues(): Promise<void> {
     const storedLastDataTime = this.lastDateTimeIssueCheck;
     const issues = await this.getIssues(storedLastDataTime);
@@ -166,20 +183,30 @@ class GitLabGroupDevice extends Device {
     }
   }
 
+  /** @private */
   private async handleIssueStatistics(): Promise<void> {
     const issueStatistics = await this.getIssueStatistics();
     const { opened } = issueStatistics.statistics.counts;
     await this.setCapabilityValue('open_issues', opened).catch(this.error);
   }
 
+  /**
+   * Enable polling for new changes
+   */
   public async enablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', false).catch(this.error);
   }
 
+  /**
+   * Disable polling for new changes
+   */
   public async disablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
+  /**
+   * @param {string} title
+   */
   public async addIssue(title: string): Promise<void> {
     let response: any; // eslint-disable-line;
     try {
@@ -226,7 +253,7 @@ class GitLabGroupDevice extends Device {
     try {
       if (changedKeys.includes('token')) {
         const { token } = newSettings as any;
-        const connection: GroupConnection = {
+        const connection: GroupConnectRequest = {
           gitlab: this.instanceUrl,
           group: this.groupId,
           token

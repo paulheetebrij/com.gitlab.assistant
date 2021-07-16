@@ -1,70 +1,19 @@
 /* eslint-disable */
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
-import { IGitLabIssue, IGitLabIssueStatistics } from '../../gitlabLib/interfaces';
-import { UserConnection, UserConnector } from './interfaces';
+import {
+  ClearStatusAfter,
+  IGitLabIssueStatistics,
+  IGitLabToDoItem
+} from '../../gitlabLib/interfaces';
+import { UserConnectRequest, UserConnector } from './interfaces';
 
-enum ClearStatusAfter {
-  ClearAfter30Minutes = '30_minutes',
-  ClearAfter3Hours = '3_hours',
-  ClearAfter8Hours = '8_hours',
-  ClearAfter1Day = '1_day',
-  ClearAfter3Days = '3_days',
-  ClearAfter7Days = '7_days',
-  ClearAfter30Days = '7_days'
-}
-interface IGitLabProjectShort {
-  id: number;
-  description: string;
-  name: string;
-  name_with_namespace: string;
-  path: string;
-  path_with_namespace: string;
-  created_at: string;
-}
-interface IGitLabUserShort {
-  id: number;
-  name: string;
-  username: string;
-  state: string;
-  avatar_url: string;
-  web_url: string;
-}
-interface IGitLabTargetShort {
-  id: number;
-  iid: number;
-  project_id: number;
-  title: string;
-  description: string;
-  state: string;
-  created_at: string;
-  updated_at: string;
-  web_url: string;
-}
-interface IGitLabMergeRequestShort extends IGitLabTargetShort {
-  target_branch: string;
-  source_branch: string;
-}
-interface IGitLabIssueShort extends IGitLabTargetShort {}
-enum GitLabToDoTargetType {
-  Issue = 'Issue',
-  MergeRequest = 'MergeRequest',
-  DesignManagementDesign = 'DesignManagement::Design',
-  AlertManagementAlert = 'AlertManagement::Alert'
-}
-interface IGitLabToDoItem {
-  id: number;
-  project: IGitLabProjectShort;
-  author: IGitLabUserShort;
-  action_name: string;
-  target_type: GitLabToDoTargetType;
-  target: IGitLabIssueShort | IGitLabMergeRequestShort;
-  body: string;
-  state: string;
-  created_at: string;
-  updated_at: string;
-}
 const pollerEvent = 'nextPoll';
+
+/**
+ * @class
+ * @extends Homey.Device
+ */
 class GitLabUserDevice extends Homey.Device {
   /**
    * onInit is called when the device is initialized.
@@ -369,7 +318,7 @@ class GitLabUserDevice extends Homey.Device {
     try {
       if (changedKeys.includes('token')) {
         const { token } = newSettings as any;
-        const connection: UserConnection = {
+        const connection: UserConnectRequest = {
           gitlab: this.instanceUrl,
           token
         };

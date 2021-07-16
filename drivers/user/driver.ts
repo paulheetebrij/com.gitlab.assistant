@@ -1,8 +1,13 @@
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
-import { UserConnection, UserConnector } from './interfaces';
+import { UserConnectRequest, UserConnector, UserConnectResponse } from './interfaces';
 
+/**
+ * @class
+ * @extends Homey.Driver
+ * @implements {UserConnector}
+ */
 class GitLabUserDriver extends Driver implements UserConnector {
   /**
    * onInit is called when the driver is initialized.
@@ -97,12 +102,12 @@ class GitLabUserDriver extends Driver implements UserConnector {
     });
   }
 
-  public async connect(data: UserConnection): Promise<{
-    credentialsAreValid: boolean;
-    userId?: number;
-    name?: string;
-    id?: string;
-  }> {
+  /**
+   * Tests credentials and validity of user settings by api call.
+   * @param {UserConnectRequest} data
+   * @returns {UserConnectResponse}
+   */
+  public async connect(data: UserConnectRequest): Promise<UserConnectResponse> {
     try {
       const { gitlab, token } = data;
       let headers: any = { Authorization: `Bearer ${token}` };
@@ -126,7 +131,7 @@ class GitLabUserDriver extends Driver implements UserConnector {
       const key = this.homey.settings.get('key');
       return { instance, key };
     });
-    session.setHandler('validate_user_settings', async (data: UserConnection) =>
+    session.setHandler('validate_user_settings', async (data: UserConnectRequest) =>
       this.connect(data)
     );
   }
