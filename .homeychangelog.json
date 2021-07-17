@@ -4,5 +4,8 @@
   },
   "1.1.0": {
     "en": "App settings default Gitlab instance en access key"
+  },
+  "1.2.0": {
+    "en": "Mogelijkheid om notificaties aan en uit te schakelen in een flow"
   }
 }
