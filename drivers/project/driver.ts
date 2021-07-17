@@ -2,6 +2,7 @@
 import Homey from 'homey';
 import fetch from 'node-fetch';
 import { ProjectConnectRequest, ProjectConnectResponse, ProjectConnector } from './interfaces';
+import { v4 as uuid } from 'uuid';
 
 /**
  * @class
@@ -122,21 +123,31 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         return { credentialsAreValid: false };
       }
       const currentProject: any = await response.json();
-      const id = `${project}`;
-      return { credentialsAreValid: true, name: currentProject.name, id };
+      return { credentialsAreValid: true, name: currentProject.name };
     } catch (error) {
       this.error(error);
       throw error;
     }
   }
 
+  private setId(response: ProjectConnectResponse): ProjectConnectResponse {
+    if (response.credentialsAreValid) {
+      response.id = uuid();
+    }
+    return response;
+  }
+
+  private get appDefaults(): { instance: string; key: string } {
+    const instance = this.homey.settings.get('instance');
+    const key = this.homey.settings.get('key');
+    return { instance, key };
+  }
+
   async onPair(session: any) {
-    session.setHandler('get_defaults', () => {
-      const instance = this.homey.settings.get('instance');
-      const key = this.homey.settings.get('key');
-      return { instance, key };
-    });
-    session.setHandler('validate_project_settings', async (args: any) => await this.connect(args));
+    session.setHandler('get_defaults', () => this.appDefaults);
+    session.setHandler('validate_project_settings', async (args: any) =>
+      this.setId(await this.connect(args))
+    );
   }
 }
 

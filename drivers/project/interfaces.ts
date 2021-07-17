@@ -15,7 +15,7 @@ export interface ProjectConnectRequest {
  * @interface
  * @property {boolean} credentialsAreValid
  * @property {string} [name] Name of the project
- * @property {string} [id] id of the project connection
+ * @property {string} [id] generated device id of the project connection
  */
 export interface ProjectConnectResponse {
   credentialsAreValid: boolean;

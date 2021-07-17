@@ -2,6 +2,7 @@
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
 import { UserConnectRequest, UserConnector, UserConnectResponse } from './interfaces';
+import { v4 as uuid } from 'uuid';
 
 /**
  * @class
@@ -117,7 +118,7 @@ class GitLabUserDriver extends Driver implements UserConnector {
         return { credentialsAreValid: false };
       }
       const { id: userId, name } = await response.json();
-      const id = `${userId}`;
+      const id = uuid(); // `${userId}`;
       return { credentialsAreValid: true, id, userId, name };
     } catch (err) {
       this.error(err);
@@ -125,12 +126,14 @@ class GitLabUserDriver extends Driver implements UserConnector {
     }
   }
 
+  private get appDefaults(): { instance: string; key: string } {
+    const instance = this.homey.settings.get('instance');
+    const key = this.homey.settings.get('key');
+    return { instance, key };
+  }
+
   async onPair(session: any) {
-    session.setHandler('get_defaults', () => {
-      const instance = this.homey.settings.get('instance');
-      const key = this.homey.settings.get('key');
-      return { instance, key };
-    });
+    session.setHandler('get_defaults', () => this.appDefaults);
     session.setHandler('validate_user_settings', async (data: UserConnectRequest) =>
       this.connect(data)
     );

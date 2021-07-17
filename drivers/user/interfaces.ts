@@ -14,7 +14,7 @@ export interface UserConnectRequest {
  * @property {boolean} credentialsAreValid
  * @property {number} [userId] User id
  * @property {string} [name] Name of the user
- * @property {string} [id] id of the user connection
+ * @property {string} [id] generated device id of the user connection
  */
 export interface UserConnectResponse {
   credentialsAreValid: boolean;

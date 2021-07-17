@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import moment from 'moment';
 import { Issue, IssueStatistics } from '../../gitlabLib/interfaces';
 import { GroupConnectRequest, GroupConnector } from './interfaces';
+import { v4 as uuid } from 'uuid';
 
 const pollerEvent = 'nextPoll';
 /**

@@ -2,6 +2,7 @@
 import Homey from 'homey';
 import fetch from 'node-fetch';
 import { GroupConnectRequest, GroupConnector, GroupConnectResponse } from './interfaces';
+import { v4 as uuid } from 'uuid';
 
 /**
  * @class
@@ -94,8 +95,7 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         return { credentialsAreValid: false };
       }
       const currentGroup: any = await response.json();
-      const id = `${group}`;
-      return { credentialsAreValid: true, name: currentGroup.name, id };
+      return { credentialsAreValid: true, name: currentGroup.name };
     } catch (err) {
       this.log(JSON.stringify(err));
       this.error(err);
@@ -103,18 +103,27 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
     }
   }
 
+  private setId(response: GroupConnectResponse): GroupConnectResponse {
+    if (response.credentialsAreValid) {
+      response.id = uuid();
+    }
+    return response;
+  }
+
+  private get appDefaults(): { instance: string; key: string } {
+    const instance = this.homey.settings.get('instance');
+    const key = this.homey.settings.get('key');
+    return { instance, key };
+  }
+
   /**
    * initialize connection defaults from app defaults.
    * set handler for pair dialog
    */
   async onPair(session: any) {
-    session.setHandler('get_defaults', () => {
-      const instance = this.homey.settings.get('instance');
-      const key = this.homey.settings.get('key');
-      return { instance, key };
-    });
+    session.setHandler('get_defaults', () => this.appDefaults);
     session.setHandler('validate_group_settings', async (data: GroupConnectRequest) =>
-      this.connect(data)
+      this.setId(await this.connect(data))
     );
   }
 }

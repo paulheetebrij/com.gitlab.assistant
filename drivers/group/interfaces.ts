@@ -15,7 +15,7 @@ export interface GroupConnectRequest {
  * @interface
  * @property {boolean} credentialsAreValid
  * @property {string} [name] Name of the group
- * @property {string} [id] id of the group connection
+ * @property {string} [id] generated device id of the group connection
  */
 export interface GroupConnectResponse {
   credentialsAreValid: boolean;
