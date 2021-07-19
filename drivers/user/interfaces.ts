@@ -1,3 +1,6 @@
+/**
+ * @module user types
+ */
 /* eslint-disable node/no-unsupported-features/es-syntax */
 /**
  * @interface

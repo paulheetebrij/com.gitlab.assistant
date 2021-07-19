@@ -1,7 +1,15 @@
+/**
+ * @module user device
+ */
 /* eslint-disable */
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
-import { ClearStatusAfter, IssueStatistics, ToDoItem } from '../../gitlabLib/interfaces';
+import {
+  ClearStatusAfter,
+  GlobalNotificationLevel,
+  IssueStatistics,
+  ToDoItem
+} from '../../gitlabLib/interfaces';
 import { UserConnectRequest, UserConnector } from './interfaces';
 
 const pollerEvent = 'nextPoll';
@@ -10,7 +18,9 @@ const pollerEvent = 'nextPoll';
  * @class
  * @extends Homey.Device
  */
-class GitLabUserDevice extends Homey.Device {
+export class GitLabUserDevice extends Homey.Device {
+  // export only needed for auto-documentation
+
   /**
    * onInit is called when the device is initialized.
    */
@@ -68,6 +78,44 @@ class GitLabUserDevice extends Homey.Device {
     this.setStoreValue('lastDataTimeTodoCheck', value);
   }
 
+  /**
+   *
+   * @param {GlobalNotificationLevel} level
+   */
+  public async setNotificationLevel(level: GlobalNotificationLevel): Promise<void> {
+    let response: Response;
+    try {
+      let headers: any = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`
+      };
+      response = await fetch(`${this.myApiUrl}notification_settings?level=${level}`, {
+        method: 'PUT',
+        headers
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          // const errMessage = await response.json();
+          // response.statusText
+          await this.setUnavailable(response.statusText);
+        }
+        throw new Error(this.homey.__('gitLabError'));
+      }
+    } catch (err) {
+      if (err.status === 401) {
+        await this.setUnavailable();
+      }
+      this.error(err);
+    }
+  }
+
+  /**
+   *
+   * @param {object} status
+   * @param {string} [status.emoji]
+   * @param {string} [status.message]
+   * @param {ClearStatusAfter} [status.clear_status_after]
+   */
   public async setStatus(status: {
     emoji?: string;
     message?: string;
@@ -105,14 +153,24 @@ class GitLabUserDevice extends Homey.Device {
     }
   }
 
+  /**
+   *
+   */
   public async enablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', false).catch(this.error);
   }
 
+  /**
+   *
+   */
   public async disablePoller(): Promise<void> {
     await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
+  /**
+   *
+   * @param {number} [id]
+   */
   public async markTodosAsDone(id?: number): Promise<void> {
     const idBranch = id ? `/${id}` : '';
     try {

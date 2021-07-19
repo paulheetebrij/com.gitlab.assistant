@@ -1,15 +1,22 @@
+/**
+ * @module user driver
+ */
+// @ts-check
 /* eslint-disable */
 import { Driver } from 'homey';
 import fetch from 'node-fetch';
 import { UserConnectRequest, UserConnector, UserConnectResponse } from './interfaces';
 import { v4 as uuid } from 'uuid';
 
+// @public
 /**
  * @class
  * @extends Homey.Driver
  * @implements {UserConnector}
  */
-class GitLabUserDriver extends Driver implements UserConnector {
+export class GitLabUserDriver extends Driver implements UserConnector {
+  // export only needed for auto-documentation
+
   /**
    * onInit is called when the driver is initialized.
    */
@@ -97,6 +104,18 @@ class GitLabUserDriver extends Driver implements UserConnector {
       const { device } = args;
       try {
         await device.disablePoller();
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
+    const cardSetGlobalNotificationLevel = this.homey.flow.getActionCard(
+      'set-user-nofification-level'
+    );
+    cardSetGlobalNotificationLevel.registerRunListener(async (args: any) => {
+      const { device, level } = args;
+      try {
+        await device.setNotificationLevel(level);
       } catch (err) {
         this.error(err);
       }

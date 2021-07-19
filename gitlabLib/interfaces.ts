@@ -11,6 +11,14 @@ export enum ClearStatusAfter {
 }
 
 /** @enum {string} */
+export enum GlobalNotificationLevel {
+  Disabled = 'disabled',
+  Mention = 'mention',
+  Watch = 'watch',
+  Participating = 'participating'
+}
+
+/** @enum {string} */
 export enum ToDoTargetType {
   Issue = 'Issue',
   MergeRequest = 'MergeRequest',

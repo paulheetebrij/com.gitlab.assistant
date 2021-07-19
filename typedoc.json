@@ -1,0 +1,9 @@
+{
+  "entryPoints": [
+    "app.ts",
+    "drivers"
+  ],
+  "exclude": "**/*+(.spec|.mspec|.intt|.e2e).ts",
+  "readme": "./README.md",
+  "out": "docs"
+}

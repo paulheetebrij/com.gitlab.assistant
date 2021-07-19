@@ -108,6 +108,57 @@
   ],
   "actions": [
     {
+      "id": "set-user-nofification-level",
+      "title": {
+        "en": "set global email notification level",
+        "nl": "schakel e-mail-notificatie niveau"
+      },
+      "titleFormatted": {
+        "en": "mark global email notification level as #[[level]]",
+        "nl": "schakel e-mail notificatie niveau naar #[[level]]"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "level",
+          "placeholder": {
+            "en": "watch",
+            "nl": "participeer"
+          },
+          "values": [
+            {
+              "id": "disabled",
+              "label": {
+                "en": "disabled",
+                "nl": "inactief"
+              }
+            },
+            {
+              "id": "mention",
+              "label": {
+                "en": "mention",
+                "nl": "als aangesproken"
+              }
+            },
+            {
+              "id": "watch",
+              "label": {
+                "en": "watch",
+                "nl": "bewaak"
+              }
+            },
+            {
+              "id": "participating",
+              "label": {
+                "en": "participating",
+                "nl": "participeer"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "user-mark-done",
       "title": {
         "en": "mark todo as done",

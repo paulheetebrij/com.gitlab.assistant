@@ -8,7 +8,7 @@
     "prebuild:lint": "eslint . --ext .ts --fix",
     "prebuild": "npm run -s prebuild:prettier-format && npm run -s prebuild:lint",
     "build": "tsc",
-    "docs": "jsdoc -c jsdoc.json",
+    "docs": "npx typedoc --categorizeByGroup",
     "validate-debug": "homey app validate",
     "create-driver-flow": "homey app driver flow",
     "local-start-debug": "homey app run",
