@@ -11,6 +11,26 @@ export enum ClearStatusAfter {
 }
 
 /** @enum {string} */
+export enum Availability {
+  NotSet = 'not_set',
+  Busy = 'busy'
+}
+
+/**
+ * @interface
+ * @property {string} emoji
+ * @property {string} message
+ * @property {Availability} availability
+ * @property {ClearStatusAfter} clear_status_after
+ */
+export interface SetStatus {
+  emoji: string;
+  message: string;
+  availability: Availability;
+  clear_status_after: ClearStatusAfter;
+}
+
+/** @enum {string} */
 export enum GlobalNotificationLevel {
   Disabled = 'disabled',
   Mention = 'mention',

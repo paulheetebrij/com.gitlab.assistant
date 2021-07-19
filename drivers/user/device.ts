@@ -8,6 +8,7 @@ import {
   ClearStatusAfter,
   GlobalNotificationLevel,
   IssueStatistics,
+  SetStatus,
   ToDoItem
 } from '../../gitlabLib/interfaces';
 import { UserConnectRequest, UserConnector } from './interfaces';
@@ -83,6 +84,7 @@ export class GitLabUserDevice extends Homey.Device {
    * @param {GlobalNotificationLevel} level
    */
   public async setNotificationLevel(level: GlobalNotificationLevel): Promise<void> {
+    this.log(`setNotificationLevel:${level}`);
     let response: Response;
     try {
       let headers: any = {
@@ -116,26 +118,21 @@ export class GitLabUserDevice extends Homey.Device {
    * @param {string} [status.message]
    * @param {ClearStatusAfter} [status.clear_status_after]
    */
-  public async setStatus(status: {
-    emoji?: string;
-    message?: string;
-    clear_status_after?: ClearStatusAfter;
-  }): Promise<void> {
+  public async setStatus(status: Partial<SetStatus>): Promise<void> {
+    this.log(`setStatus:${JSON.stringify(status)}`);
     let response: Response;
     try {
-      const { emoji, message, clear_status_after } = status;
       let headers: any = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.token}`
       };
-      let body: any = {};
-      if (emoji) body.emoji = emoji;
-      if (message) body.message = message;
-      if (clear_status_after) body.clear_status_after = clear_status_after;
-      response = await fetch(`${this.myApiUrl}status`, {
+
+      const url = `${this.myApiUrl}user/status`;
+      const body = JSON.stringify(status);
+      response = await fetch(url, {
         method: 'PUT',
         headers,
-        body: JSON.stringify(body)
+        body
       });
       if (!response.ok) {
         if (response.status === 401) {
@@ -143,6 +140,7 @@ export class GitLabUserDevice extends Homey.Device {
           // response.statusText
           await this.setUnavailable(response.statusText);
         }
+        this.log(`url: ${url}, response status: ${response.status} ${JSON.stringify(response)}`);
         throw new Error(this.homey.__('gitLabError'));
       }
     } catch (err) {

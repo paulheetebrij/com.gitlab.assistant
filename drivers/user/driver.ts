@@ -7,6 +7,7 @@ import { Driver } from 'homey';
 import fetch from 'node-fetch';
 import { UserConnectRequest, UserConnector, UserConnectResponse } from './interfaces';
 import { v4 as uuid } from 'uuid';
+import { Availability, SetStatus } from '../../gitlabLib/interfaces';
 
 // @public
 /**
@@ -55,11 +56,36 @@ export class GitLabUserDriver extends Driver implements UserConnector {
       }
     });
 
+    const cardActionClearStatus = this.homey.flow.getActionCard('user-clear-status');
+    cardActionClearStatus.registerRunListener(async (args: any) => {
+      const { device } = args;
+      try {
+        let status: Partial<SetStatus> = {};
+        await device.setStatus(status);
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
+    const cardActionMarkAsBusy = this.homey.flow.getActionCard('user-mark-as-busy');
+    cardActionMarkAsBusy.registerRunListener(async (args: any) => {
+      const { device, message, clear } = args;
+      try {
+        let status: Partial<SetStatus> = { message, availability: Availability.Busy };
+        if (clear !== 'no') {
+          status.clear_status_after = clear.replace('-', '_');
+        }
+        await device.setStatus(status);
+      } catch (err) {
+        this.error(err);
+      }
+    });
+
     const cardActionSetStatus = this.homey.flow.getActionCard('user-set-status');
     cardActionSetStatus.registerRunListener(async (args: any) => {
       const { device, message, clear } = args;
       try {
-        let status: any = { message };
+        let status: Partial<SetStatus> = { message };
         if (clear !== 'no') {
           status.clear_status_after = clear.replace('-', '_');
         }
