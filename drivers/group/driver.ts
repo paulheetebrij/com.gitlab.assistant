@@ -16,9 +16,16 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
   async onInit() {
     this.log('GitLab group has been initialized');
 
+    this.registerTriggerIssueClosed();
+    this.registerTriggerIssueOpened();
+    this.registerTriggerIssueChanged();
+    this.registerActionAddGroupIssue();
+    this.registerActionEnableGroupPoller();
+    this.registerActionDisableGroupPoller();
+  }
+
+  private registerTriggerIssueClosed(): void {
     const cardTriggerIssueClosed = this.homey.flow.getDeviceTriggerCard('group-my-issue-closed');
-    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('group-my-issue-created');
-    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard('group-my-issue-updated');
     this.addListener('myGroupIssueClosed', async (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueClosed.trigger(device, {
@@ -28,7 +35,10 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         url
       });
     });
+  }
 
+  private registerTriggerIssueOpened(): void {
+    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('group-my-issue-created');
     this.addListener('myGroupIssueCreated', async (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueOpened.trigger(device, {
@@ -38,7 +48,10 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         url
       });
     });
+  }
 
+  private registerTriggerIssueChanged(): void {
+    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard('group-my-issue-updated');
     this.addListener('myGroupIssueUpdated', async (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueChanged.trigger(device, {
@@ -48,7 +61,9 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         url
       });
     });
+  }
 
+  private registerActionAddGroupIssue(): void {
     const cardActionAddGroupIssue = this.homey.flow.getActionCard('group-create-issue');
     cardActionAddGroupIssue.registerRunListener(async (args: any) => {
       const { device, title } = args;
@@ -58,7 +73,9 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionEnableGroupPoller(): void {
     const cardActionEnableGroupPoller = this.homey.flow.getActionCard('enable-group-poller');
     cardActionEnableGroupPoller.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -68,7 +85,9 @@ class GitLabGroupDriver extends Homey.Driver implements GroupConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionDisableGroupPoller(): void {
     const cardActionDisableGroupPoller = this.homey.flow.getActionCard('disable-group-poller');
     cardActionDisableGroupPoller.registerRunListener(async (args: any) => {
       const { device } = args;

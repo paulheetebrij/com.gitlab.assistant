@@ -16,16 +16,20 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
   async onInit() {
     this.log('GitLab Project driver has been initialized');
 
+    this.registerTriggerPipelineStatusChanged();
+    this.registerTriggerNewCommit();
+    this.registerTriggerIssueClosed();
+    this.registerTriggerIssueOpened();
+    this.registerTriggerIssueChanged();
+    this.registerActionAddProjectIssue();
+    this.registerActionEnableProjectPoller();
+    this.registerActionDisableProjectPoller();
+  }
+
+  private registerTriggerPipelineStatusChanged(): void {
     const cardTriggerPipelineStatusChanged = this.homey.flow.getDeviceTriggerCard(
       'project-pipeline-status-changed'
     );
-    const cardTriggerNewCommit = this.homey.flow.getDeviceTriggerCard('project-new-commit');
-    const cardTriggerIssueClosed = this.homey.flow.getDeviceTriggerCard('project-my-issue-closed');
-    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('project-my-issue-created');
-    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard(
-      'project-my-issue-updated'
-    );
-
     this.addListener('newPipelineStatus', (args) => {
       const { device, ref, status, link, created_at, updated_at } = args;
       return cardTriggerPipelineStatusChanged.trigger(device, {
@@ -35,7 +39,10 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         url: link
       });
     });
+  }
 
+  private registerTriggerNewCommit(): void {
+    const cardTriggerNewCommit = this.homey.flow.getDeviceTriggerCard('project-new-commit');
     this.addListener('newCommit', (args) => {
       const { device, title, message, link, created_at } = args;
       return cardTriggerNewCommit.trigger(device, {
@@ -45,7 +52,10 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         url: link
       });
     });
+  }
 
+  private registerTriggerIssueClosed(): void {
+    const cardTriggerIssueClosed = this.homey.flow.getDeviceTriggerCard('project-my-issue-closed');
     this.addListener('myProjectIssueClosed', (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueClosed.trigger(device, {
@@ -55,7 +65,10 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         created
       });
     });
+  }
 
+  private registerTriggerIssueOpened(): void {
+    const cardTriggerIssueOpened = this.homey.flow.getDeviceTriggerCard('project-my-issue-created');
     this.addListener('myProjectIssueCreated', (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueOpened.trigger(device, {
@@ -65,7 +78,12 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         created
       });
     });
+  }
 
+  private registerTriggerIssueChanged(): void {
+    const cardTriggerIssueChanged = this.homey.flow.getDeviceTriggerCard(
+      'project-my-issue-updated'
+    );
     this.addListener('myProjectIssueUpdated', (args) => {
       const { device, iid, title, url, created } = args;
       return cardTriggerIssueChanged.trigger(device, {
@@ -75,7 +93,9 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         created
       });
     });
+  }
 
+  private registerActionAddProjectIssue(): void {
     const cardActionAddProjectIssue = this.homey.flow.getActionCard('project-create-issue');
     cardActionAddProjectIssue.registerRunListener(async (args: any) => {
       const { device, title } = args;
@@ -85,7 +105,9 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionEnableProjectPoller(): void {
     const cardActionEnableProjectPoller = this.homey.flow.getActionCard('enable-project-poller');
     cardActionEnableProjectPoller.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -95,7 +117,9 @@ class GitLabProjectDriver extends Homey.Driver implements ProjectConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionDisableProjectPoller(): void {
     const cardActionDisableProjectPoller = this.homey.flow.getActionCard('disable-project-poller');
     cardActionDisableProjectPoller.registerRunListener(async (args: any) => {
       const { device } = args;

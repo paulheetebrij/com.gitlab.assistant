@@ -24,6 +24,18 @@ export class GitLabUserDriver extends Driver implements UserConnector {
   async onInit() {
     this.log('Driver GitLab User has been initialized');
 
+    this.listenToNewTodo();
+    this.registerActionClearStatus();
+    this.registerActionMarkAsBusy();
+    this.registerActionSetStatus();
+    this.registerActionMarkToDoAsDone();
+    this.registerActionMarkAllToDosAsDone();
+    this.registerActionEnableUserPoller();
+    this.registerActionDisableUserPoller();
+    this.registerActionSetGlobalNotificationLevel();
+  }
+
+  private listenToNewTodo(): void {
     this.addListener('newTodo', async (args) => {
       try {
         const { device, id, project, action, state, type, title, link, author, body } = args;
@@ -55,7 +67,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionClearStatus(): void {
     const cardActionClearStatus = this.homey.flow.getActionCard('user-clear-status');
     cardActionClearStatus.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -66,7 +80,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionMarkAsBusy(): void {
     const cardActionMarkAsBusy = this.homey.flow.getActionCard('user-mark-as-busy');
     cardActionMarkAsBusy.registerRunListener(async (args: any) => {
       const { device, message, clear } = args;
@@ -80,7 +96,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionSetStatus(): void {
     const cardActionSetStatus = this.homey.flow.getActionCard('user-set-status');
     cardActionSetStatus.registerRunListener(async (args: any) => {
       const { device, message, clear } = args;
@@ -94,7 +112,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionMarkToDoAsDone(): void {
     const cardActionMarkToDoAsDone = this.homey.flow.getActionCard('user-mark-done');
     cardActionMarkToDoAsDone.registerRunListener(async (args: any) => {
       const { device, id } = args;
@@ -104,7 +124,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionMarkAllToDosAsDone(): void {
     const cardActionMarkAllToDosAsDone = this.homey.flow.getActionCard('user-mark-all-done');
     cardActionMarkAllToDosAsDone.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -114,7 +136,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionEnableUserPoller(): void {
     const cardActionEnableUserPoller = this.homey.flow.getActionCard('enable-user-poller');
     cardActionEnableUserPoller.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -124,7 +148,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionDisableUserPoller(): void {
     const cardActionDisableUserPoller = this.homey.flow.getActionCard('disable-user-poller');
     cardActionDisableUserPoller.registerRunListener(async (args: any) => {
       const { device } = args;
@@ -134,7 +160,9 @@ export class GitLabUserDriver extends Driver implements UserConnector {
         this.error(err);
       }
     });
+  }
 
+  private registerActionSetGlobalNotificationLevel(): void {
     const cardSetGlobalNotificationLevel = this.homey.flow.getActionCard(
       'set-user-nofification-level'
     );

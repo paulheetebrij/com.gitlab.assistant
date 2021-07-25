@@ -5,7 +5,6 @@
 import Homey from 'homey';
 import fetch, { Response } from 'node-fetch';
 import {
-  ClearStatusAfter,
   GlobalNotificationLevel,
   IssueStatistics,
   SetStatus,
@@ -155,6 +154,7 @@ export class GitLabUserDevice extends Homey.Device {
    *
    */
   public async enablePoller(): Promise<void> {
+    this.log(`enablePoller`);
     await this.setCapabilityValue('paused', false).catch(this.error);
   }
 
@@ -162,6 +162,7 @@ export class GitLabUserDevice extends Homey.Device {
    *
    */
   public async disablePoller(): Promise<void> {
+    this.log(`disablePoller`);
     await this.setCapabilityValue('paused', true).catch(this.error);
   }
 
@@ -170,6 +171,7 @@ export class GitLabUserDevice extends Homey.Device {
    * @param {number} [id]
    */
   public async markTodosAsDone(id?: number): Promise<void> {
+    this.log(`markTodosAsDone(${id})`);
     const idBranch = id ? `/${id}` : '';
     try {
       let headers: any = { Authorization: `Bearer ${this.token}` };
@@ -194,6 +196,7 @@ export class GitLabUserDevice extends Homey.Device {
   }
 
   private async getMyIssueStatistics(): Promise<IssueStatistics> {
+    this.log(`getMyIssueStatistics`);
     let response: Response; // eslint-disable-line;
     //GET /issues_statistics?author_id=5
     //GET / issues_statistics ? assignee_id = 5
@@ -221,6 +224,7 @@ export class GitLabUserDevice extends Homey.Device {
   }
 
   private async getTodos(): Promise<ToDoItem[]> {
+    this.log(`getTodos`);
     let response: Response; // eslint-disable-line;
     const url = `${this.myApiUrl}todos?state=pending`;
     try {
@@ -246,6 +250,7 @@ export class GitLabUserDevice extends Homey.Device {
   }
 
   private async notifyNewTodo(todos: ToDoItem[], threshold: string): Promise<void> {
+    this.log(`notifyNewTodo`);
     const notificationData = todos
       .map((todoItem: ToDoItem) => {
         const {
@@ -302,6 +307,7 @@ export class GitLabUserDevice extends Homey.Device {
   }
 
   private async poller(): Promise<void> {
+    this.log(`poller`);
     if (this.getCapabilityValue('paused') === false) {
       this.emit(pollerEvent);
     } else {
@@ -336,7 +342,7 @@ export class GitLabUserDevice extends Homey.Device {
   }
 
   private async handleMyIssues(): Promise<void> {
-    // const tasks = await this.getMyIssues();
+    this.log(`handleMyIssues`);
     try {
       const { statistics } = await this.getMyIssueStatistics();
       await this.setCapabilityValue('open_issues', statistics.counts.opened);

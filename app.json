@@ -946,6 +946,20 @@
         ]
       },
       {
+        "id": "user-clear-status",
+        "title": {
+          "en": "clear personal status",
+          "nl": "verwijder peroonlijke status"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          }
+        ]
+      },
+      {
         "id": "user-set-status",
         "title": {
           "en": "set personal status",
@@ -954,6 +968,94 @@
         "titleFormatted": {
           "en": "set personal status to [[message]]. [[clear]] clear status",
           "nl": "pas persoonlijke status aan naar [[message]]. Verwijder status [[clear]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=user"
+          },
+          {
+            "type": "text",
+            "name": "message",
+            "placeholder": {
+              "en": "Very busy, do not disturb",
+              "nl": "Zin in koffie"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "clear",
+            "values": [
+              {
+                "id": "no",
+                "label": {
+                  "en": "Do not",
+                  "nl": "niet"
+                }
+              },
+              {
+                "id": "30-minutes",
+                "label": {
+                  "en": "After 30 minutes",
+                  "nl": "na 30 minuten"
+                }
+              },
+              {
+                "id": "3-hours",
+                "label": {
+                  "en": "After 3 hours",
+                  "nl": "na 3 uur"
+                }
+              },
+              {
+                "id": "8-hours",
+                "label": {
+                  "en": "After 8 hours",
+                  "nl": "na 8 uur"
+                }
+              },
+              {
+                "id": "1-day",
+                "label": {
+                  "en": "After 1 day",
+                  "nl": "na 1 dag"
+                }
+              },
+              {
+                "id": "3-days",
+                "label": {
+                  "en": "After 3 days",
+                  "nl": "na 3 dagen"
+                }
+              },
+              {
+                "id": "7-days",
+                "label": {
+                  "en": "After 7 days",
+                  "nl": "na 7 dagen"
+                }
+              },
+              {
+                "id": "30-days",
+                "label": {
+                  "en": "After 30 days",
+                  "nl": "na 30 dagen"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "user-mark-as-busy",
+        "title": {
+          "en": "mark as busy and set personal status",
+          "nl": "markeer niet storen en pas peroonlijke status aan"
+        },
+        "titleFormatted": {
+          "en": "mark as busy and set personal status to [[message]]. [[clear]] clear status",
+          "nl": "markeer niet storen en pas persoonlijke status aan naar [[message]]. Verwijder status [[clear]]"
         },
         "args": [
           {
